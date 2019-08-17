@@ -21,7 +21,7 @@ workspace "Charcoal Engine"
 		includedirs
 		{
 			"%{prj.name}/src",
-			"vendor/spdlog/include"
+			"%{prj.name}/vendor/spdlog/include"
 		}
 
 		pchheader "chpch.h"
@@ -59,7 +59,7 @@ workspace "Charcoal Engine"
 		includedirs
 		{
 			"Charcoal/src",
-			"vendor/spdlog/include"
+			"Charcoal/vendor/spdlog/include"
 		}
 
 		links
