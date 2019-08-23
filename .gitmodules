@@ -1,3 +1,6 @@
 [submodule "Charcoal/vendor/spdlog"]
 	path = Charcoal/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Charcoal/vendor/GLFW"]
+	path = Charcoal/vendor/GLFW
+	url = https://github.com/MayushKumar/glfw

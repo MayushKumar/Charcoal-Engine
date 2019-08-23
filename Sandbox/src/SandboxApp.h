@@ -11,4 +11,6 @@ public:
 public:
 	void Run();
 
+private:
+	Charcoal::Window* m_Window;
 };

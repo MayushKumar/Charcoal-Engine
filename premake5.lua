@@ -5,10 +5,20 @@ workspace "Charcoal Engine"
 
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+	IncludeDir = {}
+	IncludeDir["GLFW"] = "Charcoal/vendor/GLFW/include"
+
+	group "Dependencies"
+		include "Charcoal/vendor/GLFW"
+	group ""
+
 	project "Charcoal"
 		location "Charcoal"
 		kind "StaticLib"
 		language "C++"
+		cppdialect "C++17"
+		staticruntime "on"
+
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -21,14 +31,20 @@ workspace "Charcoal Engine"
 		includedirs
 		{
 			"%{prj.name}/src",
-			"%{prj.name}/vendor/spdlog/include"
+			"%{prj.name}/vendor/spdlog/include",
+			"%{IncludeDir.GLFW}"
+		}
+
+		links
+		{
+			"GLFW"
+			--"opengl32.lib"
 		}
 
 		pchheader "chpch.h"
 		pchsource "%{prj.name}/src/chpch.cpp"
 
 		filter "system:windows"
-			cppdialect "C++17"
 			systemversion "latest"
 			defines
 			{
@@ -36,17 +52,26 @@ workspace "Charcoal Engine"
 			}
 
 		filter "configurations:Debug"
-			defines "CH_DEBUG"
+			runtime "Debug"
 			symbols "On"
+			defines
+			{
+				"CH_ENABLE_ASSERTS",
+				"CH_DEBUG"
+			}
 
 		filter "configurations:Release"
 			defines "CH_RELEASE"
+			runtime "Release"
 			optimize "On"
 
 	project "Sandbox"
 		location "Sandbox"
 		kind "ConsoleApp"
 		language "C++"
+		cppdialect "C++17"
+		staticruntime "on"
+
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -68,7 +93,6 @@ workspace "Charcoal Engine"
 		}
 
 		filter "system:windows"
-			cppdialect "C++17"
 			systemversion "latest"
 			defines
 			{
@@ -77,8 +101,10 @@ workspace "Charcoal Engine"
 
 		filter "configurations:Debug"
 			defines "CH_DEBUG"
+			runtime "Debug"
 			symbols "On"
 
 		filter "configurations:Release"
 			defines "CH_RELEASE"
+			runtime "Release"
 			optimize "On"

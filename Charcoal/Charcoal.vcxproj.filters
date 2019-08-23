@@ -10,6 +10,12 @@
     <Filter Include="Charcoal\Events">
       <UniqueIdentifier>{06D62134-7261-8FF8-7B72-12EDE77CEBF8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Charcoal.h" />
@@ -37,6 +43,12 @@
     <ClInclude Include="src\Charcoal\Log.h">
       <Filter>Charcoal</Filter>
     </ClInclude>
+    <ClInclude Include="src\Charcoal\Window.h">
+      <Filter>Charcoal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\chpch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +57,9 @@
     </ClCompile>
     <ClCompile Include="src\Charcoal\Log.cpp">
       <Filter>Charcoal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\chpch.cpp" />
   </ItemGroup>

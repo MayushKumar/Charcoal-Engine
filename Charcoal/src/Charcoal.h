@@ -6,5 +6,6 @@
 #include <Charcoal/Events/Event.h>
 #include <Charcoal/Events/MouseEvent.h>
 #include <Charcoal/Events/KeyEvent.h>
+#include <Charcoal/Window.h>
 #include <Charcoal/Application.h>
 #include <Charcoal/EntryPoint/EntryPoint.h>
