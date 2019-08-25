@@ -2,21 +2,12 @@
 
 SandboxApp::SandboxApp()
 {
-	m_Window = Charcoal::Window::Create();
+	
 }
 
 SandboxApp::~SandboxApp()
 {
 
-}
-
-void SandboxApp::Run()
-{
-	CH_INFO("Sandbox Ran...");
-	while (true)
-	{
-		m_Window->OnUpdate();
-	}
 }
 
 //Application creation

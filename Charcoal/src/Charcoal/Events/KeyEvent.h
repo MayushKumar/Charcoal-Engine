@@ -5,11 +5,11 @@
 namespace Charcoal
 {
 
-	class KeyPressed : public Event
+	class KeyPressedEvent : public Event
 	{
 
 	public:
-		KeyPressed(int keyCode, bool repeated) : m_KeyCode(keyCode), m_Repeated(repeated) {}
+		KeyPressedEvent(int keyCode, bool repeated) : m_KeyCode(keyCode), m_Repeated(repeated) {}
 
 		inline int GetKeyCode() const { return m_KeyCode; }
 		inline bool IsRepeated() const { return m_Repeated; }
@@ -26,11 +26,11 @@ namespace Charcoal
 
 	};
 
-	class KeyReleased : public Event
+	class KeyReleasedEvent : public Event
 	{
 
 	public:
-		KeyReleased(int keyCode) : m_KeyCode(keyCode) {}
+		KeyReleasedEvent(int keyCode) : m_KeyCode(keyCode) {}
 
 		inline int GetKeyCode() const { return m_KeyCode; }
 

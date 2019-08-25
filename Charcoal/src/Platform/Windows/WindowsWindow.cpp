@@ -3,6 +3,10 @@
 
 #include "Charcoal/Core.h"
 #include "Charcoal/Log.h"
+#include "Charcoal/Events/Event.h"
+#include "Charcoal/Events/KeyEvent.h"
+#include "Charcoal/Events/MouseEvent.h"
+#include "Charcoal/Events/ApplicationEvent.h"
 
 namespace Charcoal
 {
@@ -42,6 +46,63 @@ namespace Charcoal
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
+
+		//GLFW callbacks
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			data.EventCallback(WindowClosedEvent());
+			});
+
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			data.EventCallback(WindowResizedEvent(width, height));
+			});
+	
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					data.EventCallback(KeyPressedEvent(key, false));
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					data.EventCallback(KeyReleasedEvent(key));
+					break;
+				}
+				case GLFW_REPEAT:
+				{
+					data.EventCallback(KeyPressedEvent(key, true));
+					break;
+				}
+			}
+			});
+
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					data.EventCallback(MouseButtonPressedEvent(button));
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					data.EventCallback(MouseButtonReleasedEvent(button));
+					break;
+				}
+			}
+			});
+
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				data.EventCallback(MouseScrolledEvent((float)yOffset));
+			});
 	}
 
 	void WindowsWindow::ShutDown()

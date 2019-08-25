@@ -4,3 +4,6 @@
 [submodule "Charcoal/vendor/GLFW"]
 	path = Charcoal/vendor/GLFW
 	url = https://github.com/MayushKumar/glfw
+[submodule "Charcoal/Charcoal/vendor/GLFW"]
+	path = Charcoal/Charcoal/vendor/GLFW
+	url = https://github.com/MayushKumar/glfw
