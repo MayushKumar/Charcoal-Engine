@@ -1,6 +1,9 @@
 #include <chpch.h>
 #include "WindowsWindow.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "Charcoal/Core.h"
 #include "Charcoal/Log.h"
 #include "Charcoal/Events/Event.h"
@@ -44,6 +47,11 @@ namespace Charcoal
 		}
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		glfwMakeContextCurrent(m_Window);
+
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		CH_CORE_ASSERT(status, "Failed to initialize Glad");
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -55,6 +63,8 @@ namespace Charcoal
 
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			data.Width = width;
+			data.Height = height;
 			data.EventCallback(WindowResizedEvent(width, height));
 			});
 	
@@ -81,6 +91,11 @@ namespace Charcoal
 			}
 			});
 
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int character) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			data.EventCallback(KeyTypedEvent(character));
+			});
+
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -100,8 +115,13 @@ namespace Charcoal
 			});
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-				data.EventCallback(MouseScrolledEvent((float)yOffset));
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			data.EventCallback(MouseScrolledEvent((float)xOffset, (float)yOffset));
+			});
+
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			data.EventCallback(MouseMovedEvent((float)xPos, (float)yPos));
 			});
 	}
 

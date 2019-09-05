@@ -2,7 +2,7 @@
 
 #include "Charcoal/Window.h"
 
-#include <GLFW/glfw3.h>
+struct GLFWwindow;
 
 namespace Charcoal
 {

@@ -10,7 +10,7 @@ namespace Charcoal
 	enum EventType
 	{
 		Unknown = 0,
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyReleased, KeyTyped,
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
 		WindowResized, WindowClosed
 	};
@@ -33,7 +33,7 @@ namespace Charcoal
 		virtual inline bool IsInCategory(int category) const = 0;
 		virtual inline std::string ToString() const = 0;
 
-		inline bool IsHandled() { return m_Handled; };
+		inline bool Handled() { return m_Handled; };
 		virtual ~Event() {};
 
 	public:

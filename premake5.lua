@@ -7,9 +7,13 @@ workspace "Charcoal Engine"
 
 	IncludeDir = {}
 	IncludeDir["GLFW"] = "Charcoal/vendor/GLFW/include"
+	IncludeDir["Glad"] = "Charcoal/vendor/Glad/include"
+	IncludeDir["ImGui"] = "Charcoal/vendor/ImGui"
 
 	group "Dependencies"
 		include "Charcoal/vendor/GLFW"
+		include "Charcoal/vendor/Glad"
+		include "Charcoal/vendor/ImGui"
 	group ""
 
 	project "Charcoal"
@@ -32,13 +36,22 @@ workspace "Charcoal Engine"
 		{
 			"%{prj.name}/src",
 			"%{prj.name}/vendor/spdlog/include",
-			"%{IncludeDir.GLFW}"
+			"%{IncludeDir.GLFW}",
+			"%{IncludeDir.Glad}",
+			"%{IncludeDir.ImGui}"
 		}
 
 		links
 		{
-			"GLFW"
+			"GLFW",
+			"Glad",
+			"ImGui"
 			--"opengl32.lib"
+		}
+
+		defines
+		{
+			"GLFW_INCLUDE_NONE"
 		}
 
 		pchheader "chpch.h"

@@ -13,3 +13,5 @@
 	#define CH_CORE_ASSERT(x, ...)
 	#define CH_ASSERT(x, ...)
 #endif
+
+#define CH_BIND_EVENT_FUNC(func) std::bind(&func, this, std::placeholders::_1)

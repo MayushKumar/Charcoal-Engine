@@ -45,4 +45,23 @@ namespace Charcoal
 
 	};
 
+	class KeyTypedEvent : public Event
+	{
+
+	public:
+		KeyTypedEvent(int character) : m_Character(character){}
+
+		inline int GetCharacter() const { return m_Character; }
+
+		inline std::string ToString() const override { return "Key Typed: " + std::to_string(m_Character); }
+
+		GET_TYPE_FUNC(EventType::KeyTyped)
+		GET_CATEGORY_FLAGS_FUNC(EventCategory::InputEvent | EventCategory::KeyInputEvent)
+		IS_IN_CATEGORY_FUNC
+
+	private:
+		int m_Character;
+		
+	};
+
 }

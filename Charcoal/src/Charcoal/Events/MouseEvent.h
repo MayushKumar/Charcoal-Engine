@@ -56,19 +56,20 @@ namespace Charcoal
 	{
 
 	public:
-		MouseScrolledEvent(float value) : m_Value(value) {}
+		MouseScrolledEvent(float xOffset, float yOffset) : m_XOffset(xOffset), m_YOffset(yOffset) {}
 		~MouseScrolledEvent() {}
 
-		inline float GetValue() const { return m_Value; }
+		inline float GetXOffset() const { return m_XOffset; }
+		inline float GetYOffset() const { return m_YOffset; }
 
-		inline std::string ToString() const override { return "Mouse Scrolled: " + std::to_string(m_Value); }
+		inline std::string ToString() const override { return "Mouse Scrolled: XOffset = " + std::to_string(m_XOffset) + ", YOffset = " + std::to_string(m_YOffset); }
 
 		GET_TYPE_FUNC(EventType::MouseScrolled)
 		GET_CATEGORY_FLAGS_FUNC(EventCategory::InputEvent | EventCategory::MouseInputEvent)
 		IS_IN_CATEGORY_FUNC
 
 	private:
-		float m_Value;
+		float m_XOffset, m_YOffset;
 
 	};
 
