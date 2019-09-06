@@ -27,6 +27,7 @@ namespace Charcoal
 
 		virtual inline unsigned int GetWidth() const = 0;
 		virtual inline unsigned int GetHeight() const = 0;
+		virtual inline void* GetNativeWindow() const = 0;
 
 		virtual void SetVSync(bool enabled) = 0;
 		virtual inline bool IsVSync() const = 0;
