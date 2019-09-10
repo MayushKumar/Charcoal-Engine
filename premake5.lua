@@ -9,6 +9,7 @@ workspace "Charcoal Engine"
 	IncludeDir["GLFW"] = "Charcoal/vendor/GLFW/include"
 	IncludeDir["Glad"] = "Charcoal/vendor/Glad/include"
 	IncludeDir["ImGui"] = "Charcoal/vendor/ImGui"
+	IncludeDir["GLM"] = "Charcoal/vendor/GLM"
 
 	group "Dependencies"
 		include "Charcoal/vendor/GLFW"
@@ -38,7 +39,8 @@ workspace "Charcoal Engine"
 			"%{prj.name}/vendor/spdlog/include",
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.Glad}",
-			"%{IncludeDir.ImGui}"
+			"%{IncludeDir.ImGui}",
+			"%{IncludeDir.GLM}"
 		}
 
 		links
@@ -97,7 +99,8 @@ workspace "Charcoal Engine"
 		includedirs
 		{
 			"Charcoal/src",
-			"Charcoal/vendor/spdlog/include"
+			"Charcoal/vendor/spdlog/include",
+			"%{IncludeDir.GLM}"
 		}
 
 		links

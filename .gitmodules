@@ -7,3 +7,6 @@
 [submodule "Charcoal/vendor/ImGui"]
 	path = Charcoal/vendor/ImGui
 	url = https://github.com/MayushKumar/imgui
+[submodule "Charcoal/vendor/GLM"]
+	path = Charcoal/vendor/GLM
+	url = https://github.com/g-truc/glm

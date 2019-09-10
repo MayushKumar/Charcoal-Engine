@@ -20,8 +20,7 @@ public:
 
 SandboxApp::SandboxApp()
 {
-	PushLayer(new ExampleLayer);
-	PushOverlay(new Charcoal::ImGuiLayer);
+	PushLayer(new ExampleLayer());
 }
 
 SandboxApp::~SandboxApp()

@@ -1,10 +1,13 @@
 #pragma once
 
-#include "Charcoal/Log.h"
+#include "Charcoal/Core.h"
+
 #include "Charcoal/Window.h"
 #include "Charcoal/Events/Event.h"
 #include "Charcoal/Events/ApplicationEvent.h"
 #include "Charcoal/Layers/LayerStack.h"
+
+#include "Charcoal/ImGui/ImGuiLayer.h"
 
 namespace Charcoal {
 
@@ -33,6 +36,8 @@ namespace Charcoal {
 		static Application* s_Instance;
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
+
 		bool m_Running;
 		LayerStack m_LayerStack;
 	};

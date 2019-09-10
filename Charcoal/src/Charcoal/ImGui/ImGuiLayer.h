@@ -14,20 +14,12 @@ namespace Charcoal
 		ImGuiLayer();
 		virtual ~ImGuiLayer();
 
-		void OnAttach() override;
-		void OnDetach() override;
-		void OnUpdate() override;
-		void OnEvent(Event& event) override;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
 
-	private:
-		bool OnMouseButtonPressed(MouseButtonPressedEvent& event);
-		bool OnMouseButtonReleased(MouseButtonReleasedEvent& event);
-		bool OnMouseMoved(MouseMovedEvent& event);
-		bool OnMouseScrolled(MouseScrolledEvent& event);
-		bool OnKeyPressed(KeyPressedEvent& event);
-		bool OnKeyReleased(KeyReleasedEvent& event);
-		bool OnKeyTyped(KeyTypedEvent& event);
-		bool OnWindowResize(WindowResizedEvent& event);
+		void Begin();
+		void End();
 
 	private:
 		float m_Time = 0.0f;
