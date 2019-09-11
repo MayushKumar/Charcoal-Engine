@@ -74,7 +74,7 @@ namespace Charcoal
 	{
 		Window& window = Application::GetApplication().GetWindow();
 		ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize = ImVec2(window.GetWidth(), window.GetHeight());
+		io.DisplaySize = ImVec2((float)window.GetWidth(), (float)window.GetHeight());
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

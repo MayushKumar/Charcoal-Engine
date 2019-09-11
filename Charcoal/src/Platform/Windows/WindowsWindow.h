@@ -2,6 +2,8 @@
 
 #include "Charcoal/Window.h"
 
+#include "Charcoal/Renderer/GraphicsContext.h"
+
 struct GLFWwindow;
 
 namespace Charcoal
@@ -29,6 +31,7 @@ namespace Charcoal
 
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

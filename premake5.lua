@@ -53,7 +53,8 @@ workspace "Charcoal Engine"
 
 		defines
 		{
-			"GLFW_INCLUDE_NONE"
+			"GLFW_INCLUDE_NONE",
+			"_CRT_SECURE_NO_WARNINGS"
 		}
 
 		pchheader "chpch.h"
@@ -100,7 +101,8 @@ workspace "Charcoal Engine"
 		{
 			"Charcoal/src",
 			"Charcoal/vendor/spdlog/include",
-			"%{IncludeDir.GLM}"
+			"%{IncludeDir.GLM}",
+			"%{IncludeDir.ImGui}"
 		}
 
 		links

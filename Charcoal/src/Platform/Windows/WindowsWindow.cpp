@@ -1,7 +1,6 @@
 #include <chpch.h>
 #include "WindowsWindow.h"
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include "Charcoal/Core.h"
@@ -10,6 +9,8 @@
 #include "Charcoal/Events/KeyEvent.h"
 #include "Charcoal/Events/MouseEvent.h"
 #include "Charcoal/Events/ApplicationEvent.h"
+
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Charcoal
 {
@@ -47,10 +48,9 @@ namespace Charcoal
 		}
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
 
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		CH_CORE_ASSERT(status, "Failed to initialize Glad");
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
@@ -133,7 +133,7 @@ namespace Charcoal
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

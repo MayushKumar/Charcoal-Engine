@@ -2,6 +2,8 @@
 
 //For client apps only!
 
+#include <imgui.h>
+
 #include <Charcoal/Log.h>
 #include <Charcoal/Application.h>
 #include <Charcoal/Events/Event.h>
