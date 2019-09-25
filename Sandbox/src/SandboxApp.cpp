@@ -13,7 +13,7 @@ public:
 
 	void OnEvent(Charcoal::Event& event) override
 	{
-		//CH_INFO(event);
+		
 	}
 	
 	void OnImGuiRender() override
