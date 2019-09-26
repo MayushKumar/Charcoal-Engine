@@ -1,20 +1,20 @@
 #pragma once
 
+#include "VertexArray.h"
+#include "RendererAPI.h"
+
 namespace Charcoal
 {
-
-	enum class RendererAPI
-	{
-		None = 0, OpenGL
-	};
 
 	class Renderer
 	{
 	public:
-		inline static RendererAPI GetAPI() { return m_RendererAPI; }
+		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
-	private:
-		static RendererAPI m_RendererAPI;
+		static void BeginScene();
+		static void EndScene();
+
+		static void Submit(const std::weak_ptr<VertexArray>& vertexArray);
 	};
 
 }

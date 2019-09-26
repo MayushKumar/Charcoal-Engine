@@ -1,9 +1,23 @@
 #include "chpch.h"
 #include "Renderer.h"
 
+#include "RendererCommand.h"
+
 namespace Charcoal
 {
 
-	RendererAPI Renderer::m_RendererAPI = RendererAPI::OpenGL;
+	void Renderer::BeginScene()
+	{
+	}
+
+	void Renderer::EndScene()
+	{
+	}
+
+	void Renderer::Submit(const std::weak_ptr<VertexArray>& vertexArray)
+	{
+		vertexArray.lock()->Bind();
+		RendererCommand::DrawIndexed(vertexArray);
+	}
 
 }

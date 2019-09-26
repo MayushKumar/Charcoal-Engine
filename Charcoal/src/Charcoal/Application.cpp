@@ -3,7 +3,10 @@
 #include "Core.h"
 #include "Application.h"
 
-#include <glad/glad.h>
+#include "Renderer/RendererCommand.h"
+#include "Renderer/Renderer.h"
+
+//#include <glad/glad.h>
 
 namespace Charcoal {
 
@@ -89,8 +92,8 @@ namespace Charcoal {
 	{
 		while (m_Running)
 		{
-			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RendererCommand::SetClearColour({ 0.1f, 0.1f, 0.1f, 1.0f });
+			RendererCommand::Clear();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
@@ -122,8 +125,7 @@ namespace Charcoal {
 	void Application::OnUpdate()
 	{
 		m_SquareShader->Bind();
-		m_SquareVA->Bind();
-		glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		Renderer::Submit(m_SquareVA);
 	}
 
 	bool Application::OnWindowClose(WindowClosedEvent& event)

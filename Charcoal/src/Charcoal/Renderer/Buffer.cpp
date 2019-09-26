@@ -12,8 +12,8 @@ namespace Charcoal
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
-		case RendererAPI::OpenGL:	return new OpenGLVertexBuffer(size, vertices);
+		case RendererAPI::API::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
+		case RendererAPI::API::OpenGL:	return new OpenGLVertexBuffer(size, vertices);
 		}
 		CH_CORE_ASSERT(false, "Unkown Renderer API!");
 		return nullptr;
@@ -23,8 +23,8 @@ namespace Charcoal
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
-		case  RendererAPI::OpenGL:	return new OpenGLIndexBuffer(size, indices);
+		case RendererAPI::API::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
+		case  RendererAPI::API::OpenGL:	return new OpenGLIndexBuffer(size, indices);
 		}
 		CH_CORE_ASSERT(false, "Unkown Renderer API!");
 		return nullptr;

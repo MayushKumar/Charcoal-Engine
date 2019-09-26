@@ -12,8 +12,8 @@ namespace Charcoal
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
-		case RendererAPI::OpenGL:	return new OpenGLShader(vertexSrc, fragmentSrc);
+		case RendererAPI::API::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
+		case RendererAPI::API::OpenGL:	return new OpenGLShader(vertexSrc, fragmentSrc);
 		}
 		CH_CORE_ASSERT(false, "Unkown Renderer API!");
 		return nullptr;
