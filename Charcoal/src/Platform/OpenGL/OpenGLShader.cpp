@@ -4,6 +4,9 @@
 #include "Charcoal/Core.h"
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 
 namespace Charcoal
 {
@@ -134,6 +137,11 @@ namespace Charcoal
 	void OpenGLShader::Unbind() const
 	{
 		glUseProgram(0);
+	}
+
+	void OpenGLShader::SetMat4(const std::string name, const glm::mat4& matrix) const
+	{
+		glUniformMatrix4fv(glGetUniformLocation(m_RendererID, name.c_str()), 1, false, glm::value_ptr(matrix));
 	}
 
 }

@@ -9,6 +9,7 @@
 #include "Charcoal/Renderer/Shader.h"
 #include "Charcoal/Renderer/Buffer.h"
 #include "Charcoal/Renderer/VertexArray.h"
+#include "Charcoal/Renderer/OrthographicCamera.h"
 
 #include "Charcoal/ImGui/ImGuiLayer.h"
 
@@ -33,7 +34,7 @@ namespace Charcoal {
 		static inline Application& GetApplication() { return *s_Instance; }
 
 	private:
-		bool OnWindowClose(WindowClosedEvent& event);
+		bool OnWindowClose(WindowClosedEvent& e);
 
 	private:
 		static Application* s_Instance;
@@ -45,6 +46,7 @@ namespace Charcoal {
 		LayerStack m_LayerStack;
 
 		//Temp
+		OrthographicCamera m_Camera;
 		std::shared_ptr<Shader> m_SquareShader;
 		std::shared_ptr<VertexArray> m_SquareVA;
 	};

@@ -3,6 +3,9 @@
 #include "Core.h"
 #include "Application.h"
 
+#include "Input/Input.h"
+#include "Input/KeyCodes.h"
+
 #include "Renderer/RendererCommand.h"
 #include "Renderer/Renderer.h"
 
@@ -23,6 +26,8 @@ namespace Charcoal {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		m_Camera = OrthographicCamera(1280.0f / 720.0f);
 
 		float squareVertices[3 * 4] = {
 			-0.5f, -0.5f, 0.0f,
@@ -57,10 +62,12 @@ namespace Charcoal {
 
 			out vec3 v_Position;
 
+			uniform mat4 m_ViewProjection;
+
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0f);
+				gl_Position = m_ViewProjection * vec4(a_Position, 1.0f);
 			}
 		)";
 
@@ -124,11 +131,26 @@ namespace Charcoal {
 
 	void Application::OnUpdate()
 	{
-		m_SquareShader->Bind();
-		Renderer::Submit(m_SquareVA);
+		Renderer::BeginScene(m_Camera);
+		if (Input::IsKeyPressed(CH_KEY_A))
+			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(-0.05f, 0.0f, 0.0f));
+		if (Input::IsKeyPressed(CH_KEY_D))
+			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(0.05f, 0.0f, 0.0f));
+		if (Input::IsKeyPressed(CH_KEY_W))
+			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(0.0f, 0.05f, 0.0f));
+		if (Input::IsKeyPressed(CH_KEY_S))
+			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(0.0f, -0.05f, 0.0f));
+		if (Input::IsKeyPressed(CH_KEY_C))
+			m_Camera.SetRotation(m_Camera.GetRotation() + -2.5f);
+		if (Input::IsKeyPressed(CH_KEY_V))
+			m_Camera.SetRotation(m_Camera.GetRotation() + 2.5f);
+
+		Renderer::Submit(m_SquareVA, m_SquareShader);
+
+		Renderer::EndScene();
 	}
 
-	bool Application::OnWindowClose(WindowClosedEvent& event)
+	bool Application::OnWindowClose(WindowClosedEvent& e)
 	{
 		m_Running = false;
 		return true;
