@@ -6,10 +6,7 @@
 #include "Charcoal/Events/Event.h"
 #include "Charcoal/Events/ApplicationEvent.h"
 #include "Charcoal/Layers/LayerStack.h"
-#include "Charcoal/Renderer/Shader.h"
-#include "Charcoal/Renderer/Buffer.h"
-#include "Charcoal/Renderer/VertexArray.h"
-#include "Charcoal/Renderer/OrthographicCamera.h"
+#include "Charcoal/Core/Timestep.h"
 
 #include "Charcoal/ImGui/ImGuiLayer.h"
 
@@ -24,7 +21,6 @@ namespace Charcoal {
 
 	public:
 		void Run();
-		void OnUpdate();
 		void OnEvent(Event& event);
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
@@ -45,10 +41,7 @@ namespace Charcoal {
 		bool m_Running;
 		LayerStack m_LayerStack;
 
-		//Temp
-		OrthographicCamera m_Camera;
-		std::shared_ptr<Shader> m_SquareShader;
-		std::shared_ptr<VertexArray> m_SquareVA;
+		float m_LastFrameTime;
 	};
 
 }
