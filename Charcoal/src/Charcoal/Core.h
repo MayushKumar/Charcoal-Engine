@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Charcoal/Log.h"
 
 #ifndef CH_PLATFORM_WINDOWS
@@ -17,3 +18,12 @@
 #endif
 
 #define CH_BIND_EVENT_FUNC(func) std::bind(&func, this, std::placeholders::_1)
+
+namespace Charcoal
+{
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}

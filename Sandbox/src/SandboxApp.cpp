@@ -26,11 +26,9 @@ public:
 			{Charcoal::ShaderDataType::Float3, "Positions"}
 		};
 
-		std::shared_ptr<Charcoal::VertexBuffer> squareVB;
 		squareVB.reset(Charcoal::VertexBuffer::Create(sizeof(squareVertices), squareVertices));
 		squareVB->SetLayout(layout);
 
-		std::shared_ptr<Charcoal::IndexBuffer> squareIB;
 		squareIB.reset(Charcoal::IndexBuffer::Create(sizeof(squareIndices), squareIndices));
 
 		m_SquareVA->AddVertexBuffer(squareVB);
@@ -41,37 +39,33 @@ public:
 			
 			layout(location = 0) in vec3 a_Position;
 
-			out vec3 v_Position;
-
 			uniform mat4 m_ViewProjection;
+			uniform mat4 m_Transform;
 
 			void main()
 			{
-				v_Position = a_Position;
-				gl_Position = m_ViewProjection * vec4(a_Position, 1.0f);
+				gl_Position = m_ViewProjection * m_Transform * vec4(a_Position, 1.0f);
 			}
 		)";
 
 		std::string fragmentSrc = R"(
 			#version 410 core
 			
-			in vec3 v_Position;
-
 			out vec4 Colour;
+
+			uniform vec3 u_Colour;
 
 			void main()
 			{
-				Colour = vec4(v_Position * 0.5 + 0.5, 1.0f);
+				Colour = vec4(u_Colour, 1.0f);
 			}
 		)";
 
-		m_SquareShader.reset(Charcoal::Shader::Create(vertexSrc, fragmentSrc));
+		m_FlatShader.reset(Charcoal::Shader::Create(vertexSrc, fragmentSrc));
 	}
 
 	void OnUpdate(Charcoal::Timestep timestep) override
 	{
-		CH_TRACE("Timestep: {0}", timestep.GetSeconds());
-
 		Charcoal::Renderer::BeginScene(m_Camera);
 		if (Charcoal::Input::IsKeyPressed(CH_KEY_A))
 			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(-2.5f * timestep, 0.0f, 0.0f));
@@ -86,7 +80,7 @@ public:
 		if (Charcoal::Input::IsKeyPressed(CH_KEY_V))
 			m_Camera.SetRotation(m_Camera.GetRotation() + 200.0f * timestep);
 
-		Charcoal::Renderer::Submit(m_SquareVA, m_SquareShader);
+		Charcoal::Renderer::Submit(m_SquareVA, m_FlatShader, glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f)));
 
 		Charcoal::Renderer::EndScene();
 	}
@@ -95,16 +89,22 @@ public:
 	{
 		
 	}
-	
+
 	void OnImGuiRender() override
 	{
-
+		ImGui::Begin("Colour Picker");
+		ImGui::ColorEdit3("Square Colour", glm::value_ptr(m_SquareColour));
+		ImGui::End();
+		m_FlatShader->SetVec3("u_Colour", m_SquareColour);
 	}
 
 private:
 	Charcoal::OrthographicCamera m_Camera;
-	std::shared_ptr<Charcoal::Shader> m_SquareShader;
-	std::shared_ptr<Charcoal::VertexArray> m_SquareVA;
+	Charcoal::Ref<Charcoal::VertexBuffer> squareVB;
+	Charcoal::Ref<Charcoal::IndexBuffer> squareIB;
+	Charcoal::Ref<Charcoal::Shader> m_FlatShader;
+	Charcoal::Ref<Charcoal::VertexArray> m_SquareVA;
+	glm::vec3 m_SquareColour = {0.02f, 0.8f, 0.9f};
 
 };
 
@@ -119,7 +119,6 @@ SandboxApp::~SandboxApp()
 }
 
 //Application creation
-
 Charcoal::Application* CreateApplication()
 {
 	Charcoal::Application* app = new SandboxApp();

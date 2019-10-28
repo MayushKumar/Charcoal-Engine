@@ -144,4 +144,9 @@ namespace Charcoal
 		glUniformMatrix4fv(glGetUniformLocation(m_RendererID, name.c_str()), 1, false, glm::value_ptr(matrix));
 	}
 
+	void OpenGLShader::SetVec3(const std::string name, const glm::vec3& vec) const
+	{
+		glUniform3f(glGetUniformLocation(m_RendererID, name.c_str()), vec.x, vec.y, vec.z);
+	}
+
 }

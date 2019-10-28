@@ -1,7 +1,6 @@
 #pragma once
 
-#include "chpch.h"
-
+#include "Charcoal/Core.h"
 #include "VertexArray.h"
 
 #include <glm/glm.hpp>
@@ -23,7 +22,7 @@ namespace Charcoal
 
 		virtual void SetClearColour(const glm::vec4& colour) = 0;
 		virtual void Clear() = 0;
-		virtual void DrawIndexed(const std::weak_ptr<VertexArray>& vertexArray) = 0;
+		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) = 0;
 
 	private:
 		static API s_API;

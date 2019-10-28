@@ -1,4 +1,4 @@
-#include "chpch.h"
+#include <chpch.h>
 #include "RendererCommand.h"
 
 #include "Platform/OpenGL/OpenGLRendererAPI.h"
@@ -18,7 +18,7 @@ namespace Charcoal
 		s_RendererAPI->Clear();
 	}
 
-	void RendererCommand::DrawIndexed(const std::weak_ptr<VertexArray>& vertexArray)
+	void RendererCommand::DrawIndexed(const Ref<VertexArray>& vertexArray)
 	{
 		s_RendererAPI->DrawIndexed(vertexArray);
 	}

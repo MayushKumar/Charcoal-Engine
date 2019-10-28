@@ -14,7 +14,9 @@ namespace Charcoal
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+
 		virtual void SetMat4(const std::string name, const glm::mat4& matrix) const override;
+		virtual void SetVec3(const std::string name, const glm::vec3& vec) const override;
 
 	private:
 		uint32_t m_RendererID;

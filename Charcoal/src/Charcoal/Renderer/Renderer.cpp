@@ -1,6 +1,7 @@
-#include "chpch.h"
+#include <chpch.h>
 #include "Renderer.h"
 
+#include "Charcoal/Core.h"
 #include "RendererCommand.h"
 
 namespace Charcoal
@@ -17,11 +18,12 @@ namespace Charcoal
 	{
 	}
 
-	void Renderer::Submit(const std::weak_ptr<VertexArray>& vertexArray, const std::weak_ptr<Shader>& shader)
+	void Renderer::Submit(const Ref<VertexArray>& vertexArray, const Ref<Shader>& shader, const glm::mat4 transform)
 	{
-		shader.lock()->Bind();
-		shader.lock()->SetMat4("m_ViewProjection", m_SceneData->ViewProjectionMatrix);
-		vertexArray.lock()->Bind();
+		shader->Bind();
+		shader->SetMat4("m_ViewProjection", m_SceneData->ViewProjectionMatrix);
+		shader->SetMat4("m_Transform", transform);
+		vertexArray->Bind();
 		RendererCommand::DrawIndexed(vertexArray);
 	}
 
