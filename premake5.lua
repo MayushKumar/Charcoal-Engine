@@ -10,6 +10,7 @@ workspace "Charcoal Engine"
 	IncludeDir["Glad"] = "Charcoal/vendor/Glad/include"
 	IncludeDir["ImGui"] = "Charcoal/vendor/ImGui"
 	IncludeDir["GLM"] = "Charcoal/vendor/GLM"
+	IncludeDir["stb_image"] = "Charcoal/vendor/stb_image"
 
 	group "Dependencies"
 		include "Charcoal/vendor/GLFW"
@@ -30,7 +31,9 @@ workspace "Charcoal Engine"
 		files
 		{
 			"%{prj.name}/src/**.h",
-			"%{prj.name}/src/**.cpp"
+			"%{prj.name}/src/**.cpp",
+			"%{prj.name}/vendor/stb_image/stb_image.h",
+			"%{prj.name}/vendor/stb_image/stb_image.cpp"
 		}
 
 		includedirs
@@ -40,7 +43,8 @@ workspace "Charcoal Engine"
 			"%{IncludeDir.GLFW}",
 			"%{IncludeDir.Glad}",
 			"%{IncludeDir.ImGui}",
-			"%{IncludeDir.GLM}"
+			"%{IncludeDir.GLM}",
+			"%{IncludeDir.stb_image}"
 		}
 
 		links
@@ -48,7 +52,6 @@ workspace "Charcoal Engine"
 			"GLFW",
 			"Glad",
 			"ImGui"
-			--"opengl32.lib"
 		}
 
 		defines

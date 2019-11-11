@@ -21,6 +21,7 @@
 #include <Charcoal/Renderer/Buffer.h>
 #include <Charcoal/Renderer/Shader.h>
 #include <Charcoal/Renderer/VertexArray.h>
+#include <Charcoal/Renderer/Texture.h>
 
 #include <Charcoal/EntryPoint/EntryPoint.h>
 

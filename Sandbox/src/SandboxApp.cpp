@@ -10,11 +10,11 @@ public:
 	{
 		m_Camera = Charcoal::OrthographicCamera(1280.0f / 720.0f);
 
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f
 		};
 		unsigned int squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 
@@ -23,7 +23,8 @@ public:
 
 		Charcoal::BufferLayout layout =
 		{
-			{Charcoal::ShaderDataType::Float3, "Positions"}
+			{Charcoal::ShaderDataType::Float3, "a_Position"},
+			{Charcoal::ShaderDataType::Float2, "a_TexCoord"}
 		};
 
 		squareVB.reset(Charcoal::VertexBuffer::Create(sizeof(squareVertices), squareVertices));
@@ -34,7 +35,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		std::string vertexSrc = R"(
+		std::string flatShaderVertexSrc = R"(
 			#version 410 core
 			
 			layout(location = 0) in vec3 a_Position;
@@ -48,7 +49,7 @@ public:
 			}
 		)";
 
-		std::string fragmentSrc = R"(
+		std::string flatShaderFragmentSrc = R"(
 			#version 410 core
 			
 			out vec4 Colour;
@@ -61,7 +62,47 @@ public:
 			}
 		)";
 
-		m_FlatShader.reset(Charcoal::Shader::Create(vertexSrc, fragmentSrc));
+		m_FlatShader.reset(Charcoal::Shader::Create(flatShaderVertexSrc, flatShaderFragmentSrc));
+
+		std::string textureShaderVertexSrc = R"(
+			#version 410 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+
+			out vec2 v_TexCoord;
+
+			uniform mat4 m_ViewProjection;
+			uniform mat4 m_Transform;
+
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = m_ViewProjection * m_Transform * vec4(a_Position, 1.0f);
+			}
+		)";
+
+		std::string textureShaderFragmentSrc = R"(
+			#version 410 core
+			
+			in vec2 v_TexCoord;
+
+			out vec4 Colour;
+
+			uniform vec3 u_Colour;
+			uniform sampler2D u_Texture;
+
+			void main()
+			{
+				Colour = vec4(v_TexCoord, 0.0f, 1.0f);
+				Colour = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		m_TextureShader.reset(Charcoal::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		m_Texture = Charcoal::Texture2D::Create("res/textures/test.png");
+		//m_Texture = Charcoal::Texture2D::Create("test.png");
 	}
 
 	void OnUpdate(Charcoal::Timestep timestep) override
@@ -80,7 +121,8 @@ public:
 		if (Charcoal::Input::IsKeyPressed(CH_KEY_V))
 			m_Camera.SetRotation(m_Camera.GetRotation() + 200.0f * timestep);
 
-		Charcoal::Renderer::Submit(m_SquareVA, m_FlatShader, glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f)));
+		m_Texture->Bind();
+		Charcoal::Renderer::Submit(m_SquareVA, m_TextureShader);
 
 		Charcoal::Renderer::EndScene();
 	}
@@ -103,7 +145,9 @@ private:
 	Charcoal::Ref<Charcoal::VertexBuffer> squareVB;
 	Charcoal::Ref<Charcoal::IndexBuffer> squareIB;
 	Charcoal::Ref<Charcoal::Shader> m_FlatShader;
+	Charcoal::Ref<Charcoal::Shader> m_TextureShader;
 	Charcoal::Ref<Charcoal::VertexArray> m_SquareVA;
+	Charcoal::Ref<Charcoal::Texture> m_Texture;
 	glm::vec3 m_SquareColour = {0.02f, 0.8f, 0.9f};
 
 };
