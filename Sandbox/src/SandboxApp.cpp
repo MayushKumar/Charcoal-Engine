@@ -89,7 +89,6 @@ public:
 
 			out vec4 Colour;
 
-			uniform vec3 u_Colour;
 			uniform sampler2D u_Texture;
 
 			void main()
@@ -101,8 +100,10 @@ public:
 
 		m_TextureShader.reset(Charcoal::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
 
-		m_Texture = Charcoal::Texture2D::Create("res/textures/test.png");
-		//m_Texture = Charcoal::Texture2D::Create("test.png");
+		m_TextureShader->SetInt("u_Texture", 0);
+
+		m_LogoTexture = Charcoal::Texture2D::Create("assets/textures/logo.png");
+		m_BackgroundTexture = Charcoal::Texture2D::Create("assets/textures/background.png");
 	}
 
 	void OnUpdate(Charcoal::Timestep timestep) override
@@ -121,7 +122,9 @@ public:
 		if (Charcoal::Input::IsKeyPressed(CH_KEY_V))
 			m_Camera.SetRotation(m_Camera.GetRotation() + 200.0f * timestep);
 
-		m_Texture->Bind();
+		m_BackgroundTexture->Bind();
+		Charcoal::Renderer::Submit(m_SquareVA, m_TextureShader);
+		m_LogoTexture->Bind();
 		Charcoal::Renderer::Submit(m_SquareVA, m_TextureShader);
 
 		Charcoal::Renderer::EndScene();
@@ -147,7 +150,8 @@ private:
 	Charcoal::Ref<Charcoal::Shader> m_FlatShader;
 	Charcoal::Ref<Charcoal::Shader> m_TextureShader;
 	Charcoal::Ref<Charcoal::VertexArray> m_SquareVA;
-	Charcoal::Ref<Charcoal::Texture> m_Texture;
+	Charcoal::Ref<Charcoal::Texture> m_BackgroundTexture;
+	Charcoal::Ref<Charcoal::Texture> m_LogoTexture;
 	glm::vec3 m_SquareColour = {0.02f, 0.8f, 0.9f};
 
 };

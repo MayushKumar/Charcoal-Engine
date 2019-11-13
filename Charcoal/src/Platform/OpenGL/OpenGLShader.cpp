@@ -149,4 +149,9 @@ namespace Charcoal
 		glUniform3f(glGetUniformLocation(m_RendererID, name.c_str()), vec.x, vec.y, vec.z);
 	}
 
+	void OpenGLShader::SetInt(const std::string name, int value) const
+	{
+		glUniform1i(glGetUniformLocation(m_RendererID, name.c_str()), value);
+	}
+
 }

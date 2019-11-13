@@ -6,6 +6,12 @@
 namespace Charcoal
 {
 
+	void OpenGLRendererAPI::Init()
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
 	void OpenGLRendererAPI::SetClearColour(const glm::vec4& colour)
 	{
 		glClearColor(colour.r, colour.g, colour.b, colour.a);

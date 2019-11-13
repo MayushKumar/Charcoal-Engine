@@ -20,6 +20,7 @@ namespace Charcoal
 	public:
 		static inline API GetAPI() { return s_API; }
 
+		virtual void Init() = 0;
 		virtual void SetClearColour(const glm::vec4& colour) = 0;
 		virtual void Clear() = 0;
 		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) = 0;
