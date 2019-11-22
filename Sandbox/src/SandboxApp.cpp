@@ -35,71 +35,7 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		std::string flatShaderVertexSrc = R"(
-			#version 410 core
-			
-			layout(location = 0) in vec3 a_Position;
-
-			uniform mat4 m_ViewProjection;
-			uniform mat4 m_Transform;
-
-			void main()
-			{
-				gl_Position = m_ViewProjection * m_Transform * vec4(a_Position, 1.0f);
-			}
-		)";
-
-		std::string flatShaderFragmentSrc = R"(
-			#version 410 core
-			
-			out vec4 Colour;
-
-			uniform vec3 u_Colour;
-
-			void main()
-			{
-				Colour = vec4(u_Colour, 1.0f);
-			}
-		)";
-
-		m_FlatShader.reset(Charcoal::Shader::Create(flatShaderVertexSrc, flatShaderFragmentSrc));
-
-		std::string textureShaderVertexSrc = R"(
-			#version 410 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
-
-			out vec2 v_TexCoord;
-
-			uniform mat4 m_ViewProjection;
-			uniform mat4 m_Transform;
-
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = m_ViewProjection * m_Transform * vec4(a_Position, 1.0f);
-			}
-		)";
-
-		std::string textureShaderFragmentSrc = R"(
-			#version 410 core
-			
-			in vec2 v_TexCoord;
-
-			out vec4 Colour;
-
-			uniform sampler2D u_Texture;
-
-			void main()
-			{
-				Colour = vec4(v_TexCoord, 0.0f, 1.0f);
-				Colour = texture(u_Texture, v_TexCoord);
-			}
-		)";
-
-		m_TextureShader.reset(Charcoal::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
-
+		m_TextureShader.reset(Charcoal::Shader::Create("assets/shaders/Texture.glsl"));
 		m_TextureShader->SetInt("u_Texture", 0);
 
 		m_LogoTexture = Charcoal::Texture2D::Create("assets/textures/logo.png");
@@ -137,17 +73,13 @@ public:
 
 	void OnImGuiRender() override
 	{
-		ImGui::Begin("Colour Picker");
-		ImGui::ColorEdit3("Square Colour", glm::value_ptr(m_SquareColour));
-		ImGui::End();
-		m_FlatShader->SetVec3("u_Colour", m_SquareColour);
+		
 	}
 
 private:
 	Charcoal::OrthographicCamera m_Camera;
 	Charcoal::Ref<Charcoal::VertexBuffer> squareVB;
 	Charcoal::Ref<Charcoal::IndexBuffer> squareIB;
-	Charcoal::Ref<Charcoal::Shader> m_FlatShader;
 	Charcoal::Ref<Charcoal::Shader> m_TextureShader;
 	Charcoal::Ref<Charcoal::VertexArray> m_SquareVA;
 	Charcoal::Ref<Charcoal::Texture> m_BackgroundTexture;
