@@ -9,6 +9,7 @@ public:
 	void OnAttach() override
 	{
 		m_Camera = Charcoal::OrthographicCamera(1280.0f / 720.0f);
+		m_ShaderLibrary = Charcoal::ShaderLibrary();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -35,16 +36,15 @@ public:
 		m_SquareVA->AddVertexBuffer(squareVB);
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		m_TextureShader.reset(Charcoal::Shader::Create("assets/shaders/Texture.glsl"));
+		m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
+		m_TextureShader = m_ShaderLibrary.Get("Texture");
 		m_TextureShader->SetInt("u_Texture", 0);
-
 		m_LogoTexture = Charcoal::Texture2D::Create("assets/textures/logo.png");
 		m_BackgroundTexture = Charcoal::Texture2D::Create("assets/textures/background.png");
 	}
 
 	void OnUpdate(Charcoal::Timestep timestep) override
 	{
-		Charcoal::Renderer::BeginScene(m_Camera);
 		if (Charcoal::Input::IsKeyPressed(CH_KEY_A))
 			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(-2.5f * timestep, 0.0f, 0.0f));
 		if (Charcoal::Input::IsKeyPressed(CH_KEY_D))
@@ -57,6 +57,7 @@ public:
 			m_Camera.SetRotation(m_Camera.GetRotation() + -200.0f * timestep);
 		if (Charcoal::Input::IsKeyPressed(CH_KEY_V))
 			m_Camera.SetRotation(m_Camera.GetRotation() + 200.0f * timestep);
+		Charcoal::Renderer::BeginScene(m_Camera);
 
 		m_BackgroundTexture->Bind();
 		Charcoal::Renderer::Submit(m_SquareVA, m_TextureShader);
@@ -81,10 +82,12 @@ private:
 	Charcoal::Ref<Charcoal::VertexBuffer> squareVB;
 	Charcoal::Ref<Charcoal::IndexBuffer> squareIB;
 	Charcoal::Ref<Charcoal::Shader> m_TextureShader;
+	Charcoal::Ref<Charcoal::Shader> m_FlatColourShader;
 	Charcoal::Ref<Charcoal::VertexArray> m_SquareVA;
 	Charcoal::Ref<Charcoal::Texture> m_BackgroundTexture;
 	Charcoal::Ref<Charcoal::Texture> m_LogoTexture;
-	glm::vec3 m_SquareColour = {0.02f, 0.8f, 0.9f};
+
+	Charcoal::ShaderLibrary m_ShaderLibrary;
 
 };
 

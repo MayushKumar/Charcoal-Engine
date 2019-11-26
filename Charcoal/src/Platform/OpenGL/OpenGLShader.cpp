@@ -12,14 +12,19 @@
 
 namespace Charcoal
 {
-	OpenGLShader::OpenGLShader(const std::string& path)
+	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
-		std::string shaderSource = ReadFile(path);
+		std::string shaderSource = ReadFile(filepath);
 		std::unordered_map<GLenum, std::string> shaders = PreProcess(shaderSource);
 		Compile(shaders);
+		size_t slash = filepath.find_last_of("/\\");
+		slash = slash == std::string::npos ? 0 : slash;
+		size_t dot = filepath.rfind('.');
+		dot = dot == std::string::npos ? filepath.length() : dot;
+		m_Name = filepath.substr(slash + 1, dot - slash - 1);
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc) : m_RendererID()
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) : m_RendererID(), m_Name(name)
 	{
 		std::unordered_map<GLenum, std::string> shaders;
 		shaders[GL_VERTEX_SHADER] = vertexSrc;
@@ -95,6 +100,12 @@ namespace Charcoal
 			glDeleteShader(shaderID);
 		}
 
+		GLenum err;
+		while ((err = glGetError()) != GL_NO_ERROR)
+		{
+			CH_CORE_ERROR(err);
+		}
+
 		m_RendererID = program;
 	}
 
@@ -136,6 +147,21 @@ namespace Charcoal
 		return map;
 	}
 
+	uint32_t OpenGLShader::GetUniformLocation(const std::string& name) const
+	{
+		auto iterator = m_LocationCache.find(name);
+		if (iterator == m_LocationCache.end())
+		{
+			uint32_t index = glGetUniformLocation(m_RendererID, name.c_str());
+			m_LocationCache.insert({name, index});
+			return index;
+		}
+		else
+		{
+			return m_LocationCache.find(name)->second;
+		}
+	}
+
 	OpenGLShader::~OpenGLShader()
 	{
 		glDeleteProgram(m_RendererID);
@@ -153,17 +179,17 @@ namespace Charcoal
 
 	void OpenGLShader::SetMat4(const std::string name, const glm::mat4& matrix) const
 	{
-		glUniformMatrix4fv(glGetUniformLocation(m_RendererID, name.c_str()), 1, false, glm::value_ptr(matrix));
+		glUniformMatrix4fv(GetUniformLocation(name), 1, false, glm::value_ptr(matrix));
 	}
 
 	void OpenGLShader::SetVec3(const std::string name, const glm::vec3& vec) const
 	{
-		glUniform3f(glGetUniformLocation(m_RendererID, name.c_str()), vec.x, vec.y, vec.z);
+		glUniform3f(GetUniformLocation(name), vec.x, vec.y, vec.z);
 	}
 
 	void OpenGLShader::SetInt(const std::string name, int value) const
 	{
-		glUniform1i(glGetUniformLocation(m_RendererID, name.c_str()), value);
+		glUniform1i(GetUniformLocation(name), value);
 	}
 
 }
