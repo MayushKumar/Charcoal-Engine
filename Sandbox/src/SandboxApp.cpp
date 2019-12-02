@@ -4,11 +4,12 @@ class ExampleLayer : public Charcoal::Layer
 {
 
 public:
-	ExampleLayer() : Layer("Example Layer"){}
+	ExampleLayer() : Layer("Example Layer"), m_CameraController(1280.0f / 720.0f, true)
+	{
+	}
 
 	void OnAttach() override
 	{
-		m_Camera = Charcoal::OrthographicCamera(1280.0f / 720.0f);
 		m_ShaderLibrary = Charcoal::ShaderLibrary();
 
 		float squareVertices[5 * 4] = {
@@ -45,19 +46,9 @@ public:
 
 	void OnUpdate(Charcoal::Timestep timestep) override
 	{
-		if (Charcoal::Input::IsKeyPressed(CH_KEY_A))
-			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(-2.5f * timestep, 0.0f, 0.0f));
-		if (Charcoal::Input::IsKeyPressed(CH_KEY_D))
-			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(2.5f * timestep, 0.0f, 0.0f));
-		if (Charcoal::Input::IsKeyPressed(CH_KEY_W))
-			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(0.0f, 2.5f * timestep, 0.0f));
-		if (Charcoal::Input::IsKeyPressed(CH_KEY_S))
-			m_Camera.SetPosition(m_Camera.GetPostion() + glm::vec3(0.0f, -2.5f * timestep, 0.0f));
-		if (Charcoal::Input::IsKeyPressed(CH_KEY_C))
-			m_Camera.SetRotation(m_Camera.GetRotation() + -200.0f * timestep);
-		if (Charcoal::Input::IsKeyPressed(CH_KEY_V))
-			m_Camera.SetRotation(m_Camera.GetRotation() + 200.0f * timestep);
-		Charcoal::Renderer::BeginScene(m_Camera);
+		m_CameraController.OnUpdate(timestep);
+
+		Charcoal::Renderer::BeginScene(m_CameraController.GetCamera());
 
 		m_BackgroundTexture->Bind();
 		Charcoal::Renderer::Submit(m_SquareVA, m_TextureShader);
@@ -69,7 +60,7 @@ public:
 
 	void OnEvent(Charcoal::Event& event) override
 	{
-		
+		m_CameraController.OnEvent(event);
 	}
 
 	void OnImGuiRender() override
@@ -78,7 +69,7 @@ public:
 	}
 
 private:
-	Charcoal::OrthographicCamera m_Camera;
+	Charcoal::OrthographicCameraController m_CameraController;
 	Charcoal::Ref<Charcoal::VertexBuffer> squareVB;
 	Charcoal::Ref<Charcoal::IndexBuffer> squareIB;
 	Charcoal::Ref<Charcoal::Shader> m_TextureShader;

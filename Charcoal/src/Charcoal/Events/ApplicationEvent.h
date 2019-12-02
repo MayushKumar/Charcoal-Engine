@@ -16,14 +16,14 @@ namespace Charcoal {
 		inline std::string ToString() const override { return "Window Closed"; }
 	};
 
-	class WindowResizedEvent : public Event
+	class WindowResizeEvent : public Event
 	{
 	public:
-		WindowResizedEvent(int width, int height) : m_Width(width), m_Height(height) {}
-		virtual ~WindowResizedEvent() {}
+		WindowResizeEvent(int width, int height) : m_Width(width), m_Height(height) {}
+		virtual ~WindowResizeEvent() {}
 
-		inline int GetWidth() { return m_Width; }
-		inline int GetHeight() { return m_Height; }
+		inline int GetWidth() const { return m_Width; }
+		inline int GetHeight() const { return m_Height; }
 
 		GET_TYPE_FUNC(EventType::WindowResized)
 			GET_CATEGORY_FLAGS_FUNC(EventCategory::WindowEvent)

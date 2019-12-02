@@ -13,10 +13,12 @@ namespace Charcoal
 
 		void SetPosition(const glm::vec3& pos);
 		void SetRotation(float rotation);
+		void SetAspectRatio(float aspectRatio);
 		void SetZoomLevel(float zoomLevel);
 
-		inline const glm::vec3& GetPostion() { return m_Pos; }
-		inline float GetRotation() { return glm::degrees(m_Rotation); }
+		inline const glm::vec3& GetPostion() const { return m_Pos; }
+		inline float GetRotation() const { return glm::degrees(m_Rotation); }
+		inline float GetZoomLevel() const { return m_ZoomLevel; }
 
 		inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
 

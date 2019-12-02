@@ -31,6 +31,7 @@ namespace Charcoal {
 
 	private:
 		bool OnWindowClose(WindowClosedEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:
 		static Application* s_Instance;
@@ -39,6 +40,7 @@ namespace Charcoal {
 		ImGuiLayer* m_ImGuiLayer;
 
 		bool m_Running;
+		bool m_Minimized;
 		LayerStack m_LayerStack;
 
 		float m_LastFrameTime;

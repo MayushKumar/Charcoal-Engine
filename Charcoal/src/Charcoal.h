@@ -23,6 +23,8 @@
 #include <Charcoal/Renderer/VertexArray.h>
 #include <Charcoal/Renderer/Texture.h>
 
+#include <Charcoal/Utility/OrthographicCameraController.h>
+
 #include <Charcoal/EntryPoint/EntryPoint.h>
 
 #include <glm/glm.hpp>

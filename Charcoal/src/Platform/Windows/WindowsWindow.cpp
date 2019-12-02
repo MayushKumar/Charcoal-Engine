@@ -65,7 +65,7 @@ namespace Charcoal
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;
-			data.EventCallback(WindowResizedEvent(width, height));
+			data.EventCallback(WindowResizeEvent(width, height));
 			});
 	
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {

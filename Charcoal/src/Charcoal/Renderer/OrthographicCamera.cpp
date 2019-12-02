@@ -30,10 +30,18 @@ namespace Charcoal
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
+	void OrthographicCamera::SetAspectRatio(float aspectRatio)
+	{
+		m_AspectRatio = aspectRatio;
+		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	}
+
 	void OrthographicCamera::SetZoomLevel(float zoomLevel)
 	{
-		m_ProjectionMatrix = glm::ortho(m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, m_ZoomLevel, m_ZoomLevel);
-		m_ViewProjectionMatrix = m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_ZoomLevel = zoomLevel;
+		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 }
