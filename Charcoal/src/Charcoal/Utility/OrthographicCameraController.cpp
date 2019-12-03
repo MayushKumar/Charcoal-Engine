@@ -1,7 +1,7 @@
 #include "chpch.h"
 #include "OrthographicCameraController.h"
 
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 #include "Charcoal/Input/Input.h"
 #include "Charcoal/Input/KeyCodes.h"
 

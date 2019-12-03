@@ -1,7 +1,7 @@
 #include "chpch.h"
 #include "OpenGLShader.h"
 
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 
 #include <fstream>
 

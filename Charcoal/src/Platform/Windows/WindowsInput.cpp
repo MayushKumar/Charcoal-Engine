@@ -3,7 +3,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Charcoal/Application.h"
+#include "Charcoal/Core/Application.h"
 
 namespace Charcoal
 {

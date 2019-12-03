@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "Charcoal/Log.h"
+#include "Charcoal/Core/Log.h"
 
 #ifndef CH_PLATFORM_WINDOWS
 #error Charcoal only supports Windows currently

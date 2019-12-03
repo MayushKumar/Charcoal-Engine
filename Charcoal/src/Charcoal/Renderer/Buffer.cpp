@@ -2,7 +2,7 @@
 #include "Buffer.h"
 
 #include "Renderer.h"
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 namespace Charcoal

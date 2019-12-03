@@ -3,8 +3,8 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Charcoal/Core.h"
-#include "Charcoal/Log.h"
+#include "Charcoal/Core/Core.h"
+#include "Charcoal/Core/Log.h"
 #include "Charcoal/Events/Event.h"
 #include "Charcoal/Events/KeyEvent.h"
 #include "Charcoal/Events/MouseEvent.h"

@@ -1,7 +1,7 @@
 #include "chpch.h"
 #include "Shader.h"
 
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 #include "Charcoal/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 

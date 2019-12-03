@@ -1,7 +1,7 @@
 #include <chpch.h>
 #include "Renderer.h"
 
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 #include "RendererCommand.h"
 
 namespace Charcoal

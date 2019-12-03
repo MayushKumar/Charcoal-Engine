@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 
-#include "Charcoal/Window.h"
+#include "Charcoal/Core/Window.h"
 #include "Charcoal/Events/Event.h"
 #include "Charcoal/Events/ApplicationEvent.h"
 #include "Charcoal/Layers/LayerStack.h"

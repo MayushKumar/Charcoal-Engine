@@ -1,13 +1,13 @@
 #include <chpch.h>
 
-#include "Core.h"
-#include "Application.h"
+#include "Charcoal/Core/Core.h"
+#include "Charcoal/Core/Application.h"
 
-#include "Input/Input.h"
-#include "Input/KeyCodes.h"
+#include "Charcoal/Input/Input.h"
+#include "Charcoal/Input/KeyCodes.h"
 
-#include "Renderer/RendererCommand.h"
-#include "Renderer/Renderer.h"
+#include "Charcoal/Renderer/RendererCommand.h"
+#include "Charcoal/Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
 

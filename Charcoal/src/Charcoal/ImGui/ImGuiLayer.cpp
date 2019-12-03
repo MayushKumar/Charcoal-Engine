@@ -6,8 +6,8 @@
 #include "GLFW/glfw3.h"
 #include "glad/glad.h"
 
-#include "Charcoal/Application.h"
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Application.h"
+#include "Charcoal/Core/Core.h"
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
 

@@ -2,7 +2,7 @@
 
 #include "chpch.h"
 
-#include <Charcoal/Core.h>
+#include "Charcoal/Core/Core.h"
 
 #include <glm/glm.hpp>
 

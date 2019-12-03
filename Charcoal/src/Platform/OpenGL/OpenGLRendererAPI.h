@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 #include "Charcoal/Renderer/RendererAPI.h"
 
 namespace Charcoal

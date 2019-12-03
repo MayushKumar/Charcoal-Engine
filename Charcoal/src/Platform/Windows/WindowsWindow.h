@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Charcoal/Window.h"
+#include "Charcoal/Core/Window.h"
 
 #include "Charcoal/Renderer/GraphicsContext.h"
 

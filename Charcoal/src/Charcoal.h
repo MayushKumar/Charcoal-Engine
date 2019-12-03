@@ -4,8 +4,9 @@
 
 #include <imgui.h>
 
-#include <Charcoal/Log.h>
-#include <Charcoal/Application.h>
+#include <Charcoal/Core/Core.h>
+#include <Charcoal/Core/Log.h>
+#include <Charcoal/Core/Application.h>
 #include <Charcoal/Events/Event.h>
 #include <Charcoal/Layers/Layer.h>
 

@@ -1,7 +1,7 @@
 #include "chpch.h"
 #include "OrthographicCamera.h"
 
-#include "Charcoal/Core.h"
+#include "Charcoal/Core/Core.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
