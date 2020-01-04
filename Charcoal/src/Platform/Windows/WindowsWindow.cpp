@@ -1,16 +1,14 @@
-#include <chpch.h>
+#include "chpch.h"
 #include "WindowsWindow.h"
 
-#include <GLFW/glfw3.h>
-
-#include "Charcoal/Core/Core.h"
-#include "Charcoal/Core/Log.h"
 #include "Charcoal/Events/Event.h"
 #include "Charcoal/Events/KeyEvent.h"
 #include "Charcoal/Events/MouseEvent.h"
 #include "Charcoal/Events/ApplicationEvent.h"
 
 #include "Platform/OpenGL/OpenGLContext.h"
+
+#include <GLFW/glfw3.h>
 
 namespace Charcoal
 {
@@ -19,6 +17,8 @@ namespace Charcoal
 
 	Window* Window::Create(const WindowProps& props)
 	{
+		CH_PROFILE_FUNCTION();
+
 		return new WindowsWindow(props);
 	}
 
@@ -34,6 +34,8 @@ namespace Charcoal
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		CH_PROFILE_FUNCTION();
+
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 		m_Data.Title = props.Title;
@@ -127,11 +129,15 @@ namespace Charcoal
 
 	void WindowsWindow::ShutDown()
 	{
+		CH_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
+		CH_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}

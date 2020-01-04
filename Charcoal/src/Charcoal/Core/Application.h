@@ -21,6 +21,7 @@ namespace Charcoal {
 
 	public:
 		void Run();
+		void ShutDown();
 		void OnEvent(Event& event);
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);

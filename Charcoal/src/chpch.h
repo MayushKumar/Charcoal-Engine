@@ -11,6 +11,9 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <Charcoal/Core/Core.h>
+#include <Charcoal/Debug/Instrumentor.h>
+
 #ifdef CH_PLATFORM_WINDOWS
 	#include <Windows.h>
 #else 

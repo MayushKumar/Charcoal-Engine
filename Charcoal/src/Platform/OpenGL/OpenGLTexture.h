@@ -9,6 +9,7 @@ namespace Charcoal
 	{
 	public:
 		OpenGLTexture2D(const std::string& path);
+		OpenGLTexture2D(uint32_t width, uint32_t height, const glm::vec4& colour);
 		virtual ~OpenGLTexture2D();
 
 		virtual inline uint32_t GetWidth() const override { return m_Width; };

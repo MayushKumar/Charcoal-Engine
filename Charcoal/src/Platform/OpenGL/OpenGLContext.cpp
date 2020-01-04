@@ -1,8 +1,6 @@
 #include "chpch.h"
 #include "OpenGLContext.h"
 
-#include "Charcoal/Core.h"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -16,6 +14,8 @@ namespace Charcoal
 
 	void OpenGLContext::Init()
 	{
+		CH_PROFILE_FUNCTION();
+
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		CH_CORE_ASSERT(status, "Failed to initialize Glad");
@@ -24,6 +24,8 @@ namespace Charcoal
 
 	void OpenGLContext::SwapBuffers()
 	{
+		CH_PROFILE_FUNCTION();
+
 		glfwSwapBuffers(m_WindowHandle);
 	}
 

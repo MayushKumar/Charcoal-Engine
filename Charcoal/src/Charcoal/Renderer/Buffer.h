@@ -103,7 +103,7 @@ namespace Charcoal
 	public:
 		virtual ~VertexBuffer() {}
 
-		static VertexBuffer* Create(uint32_t size, float* vertices);
+		static Ref<VertexBuffer> Create(uint32_t size, float* vertices);
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
@@ -116,7 +116,7 @@ namespace Charcoal
 	public:
 		virtual ~IndexBuffer() {}
 
-		static IndexBuffer* Create(uint32_t size, uint32_t* indices);
+		static Ref<IndexBuffer> Create(uint32_t size, uint32_t* indices);
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;

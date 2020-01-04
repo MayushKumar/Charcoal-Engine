@@ -26,6 +26,8 @@ namespace Charcoal
 
 	void ImGuiLayer::OnAttach()
 	{
+		CH_PROFILE_FUNCTION();
+
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -58,6 +60,8 @@ namespace Charcoal
 
 	void ImGuiLayer::OnDetach()
 	{
+		CH_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -65,6 +69,8 @@ namespace Charcoal
 
 	void ImGuiLayer::Begin()
 	{
+		CH_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -72,6 +78,8 @@ namespace Charcoal
 
 	void ImGuiLayer::End()
 	{
+		CH_PROFILE_FUNCTION();
+
 		Window& window = Application::GetApplication().GetWindow();
 		ImGuiIO& io = ImGui::GetIO();
 		io.DisplaySize = ImVec2((float)window.GetWidth(), (float)window.GetHeight());
@@ -86,12 +94,6 @@ namespace Charcoal
 			ImGui::RenderPlatformWindowsDefault();
 			glfwMakeContextCurrent(backup_current_context);
 		}
-	}
-
-	void ImGuiLayer::OnImGuiRender()
-	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
 	}
 
 }

@@ -29,26 +29,36 @@ namespace Charcoal
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		CH_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &m_RendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		CH_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		CH_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+		CH_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer> buffer)
 	{
+		CH_PROFILE_FUNCTION();
+
 		CH_CORE_ASSERT(buffer->GetLayout().GetElements().size(), "VertexBuffer Layout has not been set");
 
 		glBindVertexArray(m_RendererID);
@@ -67,6 +77,8 @@ namespace Charcoal
 
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer> buffer)
 	{
+		CH_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 		buffer->Bind();
 		m_IndexBuffer = buffer;

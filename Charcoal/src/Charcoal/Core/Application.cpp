@@ -1,7 +1,8 @@
-#include <chpch.h>
+#include "chpch.h"
 
-#include "Charcoal/Core/Core.h"
 #include "Charcoal/Core/Application.h"
+
+#include "Charcoal/Debug/Instrumentor.h"
 
 #include "Charcoal/Input/Input.h"
 #include "Charcoal/Input/KeyCodes.h"
@@ -17,12 +18,16 @@ namespace Charcoal {
 
 	Application::Application() : m_Running(true), m_Minimized(false), m_LayerStack()
 	{
+		CH_PROFILE_BEGIN_SESSION("CharcoalProfile-Startup", "CharcoalProfile-Startup.json");
+		CH_PROFILE_FUNCTION();
+
 		CH_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(CH_BIND_EVENT_FUNC(Application::OnEvent));
 
 		Renderer::Init();
+		Renderer2D::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -30,13 +35,20 @@ namespace Charcoal {
 
 	Application::~Application()
 	{
+		CH_PROFILE_FUNCTION();
 
+		CH_PROFILE_END_SESSION();
 	}
 
 	void Application::Run()
 	{
+		CH_PROFILE_END_SESSION();
+		CH_PROFILE_BEGIN_SESSION("CharcoalProfile-Runtime", "CharcoalProfile-Runtime.json");
+
 		while (m_Running)
 		{
+			CH_PROFILE_SCOPE("Run Loop");
+
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
@@ -56,8 +68,19 @@ namespace Charcoal {
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
-
 		}
+
+		CH_PROFILE_END_SESSION();
+		CH_PROFILE_BEGIN_SESSION("CharcoalProfile-Shutdown", "CharcoalProfile-Shutdown.json");
+
+		ShutDown();
+	}
+
+	void Application::ShutDown()
+	{
+		CH_PROFILE_FUNCTION();
+
+		Renderer2D::ShutDown();
 	}
 
 	void Application::OnEvent(Event& event)

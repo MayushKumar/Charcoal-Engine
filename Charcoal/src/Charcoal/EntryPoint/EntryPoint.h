@@ -10,5 +10,6 @@ int main()
 	Charcoal::Application* app = CreateApplication();
 	app->Run();
 	delete app;
+	CH_PROFILE_END_SESSION();
 	return 0;
 }

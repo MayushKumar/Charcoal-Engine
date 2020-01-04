@@ -14,6 +14,8 @@ namespace Charcoal
 {
 	OpenGLShader::OpenGLShader(const std::string& filepath)
 	{
+		CH_PROFILE_FUNCTION();
+
 		std::string shaderSource = ReadFile(filepath);
 		std::unordered_map<GLenum, std::string> shaders = PreProcess(shaderSource);
 		Compile(shaders);
@@ -26,6 +28,8 @@ namespace Charcoal
 
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc) : m_RendererID(), m_Name(name)
 	{
+		CH_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaders;
 		shaders[GL_VERTEX_SHADER] = vertexSrc;
 		shaders[GL_FRAGMENT_SHADER] = fragmentSrc;
@@ -34,6 +38,8 @@ namespace Charcoal
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaders)
 	{
+		CH_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
 		CH_CORE_ASSERT((shaders.size() <= 2), "Size of shader sources should not be more than 2!");
 		std::array<GLuint, 2> shaderIDs;
@@ -111,6 +117,8 @@ namespace Charcoal
 
 	std::string OpenGLShader::ReadFile(const std::string& path)
 	{
+		CH_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream file(path, std::ios::in | std::ios::binary);
 
@@ -126,6 +134,8 @@ namespace Charcoal
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string shaderSource)
 	{
+		CH_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> map = std::unordered_map<GLenum, std::string>();
 		size_t index = 0;
 		size_t carriageReturn = 0;
@@ -149,6 +159,8 @@ namespace Charcoal
 
 	uint32_t OpenGLShader::GetUniformLocation(const std::string& name) const
 	{
+		CH_PROFILE_FUNCTION();
+
 		auto iterator = m_LocationCache.find(name);
 		if (iterator == m_LocationCache.end())
 		{
@@ -185,6 +197,11 @@ namespace Charcoal
 	void OpenGLShader::SetVec3(const std::string name, const glm::vec3& vec) const
 	{
 		glUniform3f(GetUniformLocation(name), vec.x, vec.y, vec.z);
+	}
+
+	void OpenGLShader::SetVec4(const std::string name, const glm::vec4& vec) const
+	{
+		glUniform4f(GetUniformLocation(name), vec.x, vec.y, vec.z, vec.w);
 	}
 
 	void OpenGLShader::SetInt(const std::string name, int value) const

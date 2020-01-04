@@ -26,7 +26,7 @@
 
 #include <Charcoal/Utility/OrthographicCameraController.h>
 
-#include <Charcoal/EntryPoint/EntryPoint.h>
+#include <Charcoal/Debug/Instrumentor.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
