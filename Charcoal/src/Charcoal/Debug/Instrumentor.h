@@ -11,7 +11,7 @@ namespace Charcoal
 	{
 		const char* Name;
 		long long Start, End;
-		uint32_t ThreadID;
+		long long ThreadID;
 	};
 
 	class Instrumentor

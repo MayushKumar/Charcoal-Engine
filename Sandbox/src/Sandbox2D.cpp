@@ -61,14 +61,5 @@ void Sandbox2D::OnEvent(Charcoal::Event& event)
 
 void Sandbox2D::OnImGuiRender()
 {
-	ImGui::Begin("Profile Results");
-	for (Charcoal::ProfileResult& result : m_ProfileResults)
-	{
-		char label[50];
-		strcpy_s(label, "%.3fms ");
-		strcat_s(label, result.Name);
-		ImGui::Text(label, result.End - result.Start);
-	}
-	m_ProfileResults.clear();
-	ImGui::End();
+	
 }

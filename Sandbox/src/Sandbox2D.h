@@ -27,6 +27,4 @@ private:
 
 	Charcoal::ShaderLibrary m_ShaderLibrary;
 
-	std::vector<Charcoal::ProfileResult> m_ProfileResults;
-
 };
