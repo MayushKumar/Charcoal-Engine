@@ -28,9 +28,9 @@ namespace Charcoal
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
-		inline virtual uint32_t GetCount() const override { return m_Count; }
+		inline virtual uint32_t GetCount() const override { return m_Size / sizeof(uint32_t); }
 
 	private:
-		uint32_t m_RendererID, m_Count;
+		uint32_t m_RendererID, m_Size;
 	};
 }

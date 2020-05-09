@@ -22,6 +22,7 @@ namespace Charcoal
 		inline void* GetNativeWindow() const override { return m_Window; }
 		void SetVSync(bool enabled) override;
 		inline bool IsVSync() const override { return m_Data.VSync; }
+		void SetCursorMode(WindowCursorMode mode) override;
 
 		void SetEventCallback(const EventCallbackFn& eventCallback) override { m_Data.EventCallback = eventCallback; }
 
@@ -38,6 +39,7 @@ namespace Charcoal
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;
+			WindowCursorMode CursorMode;
 
 			EventCallbackFn EventCallback;
 		};

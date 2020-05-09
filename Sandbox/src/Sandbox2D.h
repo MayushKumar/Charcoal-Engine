@@ -19,8 +19,6 @@ private:
 	Charcoal::OrthographicCameraController m_CameraController;
 	Charcoal::Ref<Charcoal::VertexBuffer> squareVB;
 	Charcoal::Ref<Charcoal::IndexBuffer> squareIB;
-	Charcoal::Ref<Charcoal::Shader> m_TextureShader;
-	Charcoal::Ref<Charcoal::Shader> m_FlatColourShader;
 	Charcoal::Ref<Charcoal::VertexArray> m_SquareVA;
 	Charcoal::Ref<Charcoal::Texture2D> m_BackgroundTexture;
 	Charcoal::Ref<Charcoal::Texture2D> m_LogoTexture;

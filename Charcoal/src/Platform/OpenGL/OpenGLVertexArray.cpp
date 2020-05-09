@@ -55,7 +55,7 @@ namespace Charcoal
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer> buffer)
+	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer> buffer, uint32_t attribOffset)
 	{
 		CH_PROFILE_FUNCTION();
 
@@ -64,7 +64,7 @@ namespace Charcoal
 		glBindVertexArray(m_RendererID);
 		buffer->Bind();
 
-		uint32_t index = 0;
+		uint32_t index = attribOffset;
 		const auto& layout = buffer->GetLayout();
 		for (const auto& element : layout)
 		{

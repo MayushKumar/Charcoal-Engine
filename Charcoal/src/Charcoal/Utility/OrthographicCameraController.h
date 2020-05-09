@@ -21,7 +21,6 @@ namespace Charcoal
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
-		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
 	private:

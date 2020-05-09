@@ -31,9 +31,6 @@ void Sandbox2D::OnAttach()
 	m_SquareVA->AddVertexBuffer(squareVB);
 	m_SquareVA->SetIndexBuffer(squareIB);
 
-	m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
-	m_TextureShader = m_ShaderLibrary.Get("Texture");
-	m_TextureShader->SetInt("u_Texture", 0);
 	m_LogoTexture = Charcoal::Texture2D::Create("assets/textures/logo.png");
 	m_BackgroundTexture = Charcoal::Texture2D::Create("assets/textures/background.png");
 }
@@ -47,7 +44,6 @@ void Sandbox2D::OnUpdate(Charcoal::Timestep timestep)
 	{
 		CH_PROFILE_SCOPE("Render");
 		Charcoal::Renderer2D::BeginScene(m_CameraController.GetCamera());
-		Charcoal::Renderer2D::DrawQuad({ 0.0f, 0.0f }, { 0.5f, 0.5f }, { 0.2f, 0.8f, 0.9f, 1.0f });
 		Charcoal::Renderer2D::DrawQuad({ 0.0f, 0.0f }, { 0.5f, 0.5f }, m_BackgroundTexture);
 		Charcoal::Renderer2D::DrawQuad({ 0.0f, 0.0f }, { 0.5f, 0.5f }, m_LogoTexture);
 		Charcoal::Renderer2D::EndScene();

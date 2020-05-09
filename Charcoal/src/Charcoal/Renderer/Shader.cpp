@@ -37,7 +37,7 @@ namespace Charcoal
 
 	void ShaderLibrary::Add(const Ref<Shader>& shader)
 	{
-		std::string& name = shader->GetName();
+		const std::string& name = shader->GetName();
 		Add(name, shader);
 	}
 

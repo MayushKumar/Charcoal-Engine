@@ -94,8 +94,14 @@ namespace Charcoal
 #ifdef CH_PROFILE
 	#define CH_PROFILE_BEGIN_SESSION(name , filePath) ::Charcoal::Instrumentor::Get().BeginSession(name, filePath)
 	#define CH_PROFILE_END_SESSION() ::Charcoal::Instrumentor::Get().EndSession()
-	#define CH_PROFILE_SCOPE(name) ::Charcoal::InstrumentorTimer timer##__LINE__(name);
-	#define CH_PROFILE_FUNCTION() CH_PROFILE_SCOPE(__FUNCSIG__)
+	#define CH_PROFILE_SCOPE(name) ::Charcoal::InstrumentorTimer timer##__LINE__(name)
+	
+	#ifdef _MS_VER
+		#define CH_PROFILE_FUNCTION() CH_PROFILE_SCOPE(__FUNCSIG__)
+	#elif defined __GNUC__
+		#define CH_PROFILE_FUNCTION() CH_PROFILE_SCOPE(__func__)
+	#endif
+	
 #else
 	#define CH_PROFILE_BEGIN_SESSION(name , filePath)
 	#define CH_PROFILE_END_SESSION()

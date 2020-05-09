@@ -19,12 +19,16 @@
 #include <Charcoal/Input/MouseCodes.h>
 
 #include <Charcoal/Renderer/Renderer.h>
+#include <Charcoal/Renderer/RendererCommand.h>
 #include <Charcoal/Renderer/Buffer.h>
 #include <Charcoal/Renderer/Shader.h>
 #include <Charcoal/Renderer/VertexArray.h>
 #include <Charcoal/Renderer/Texture.h>
+#include <Charcoal/Renderer/RendererEnums.h>
+#include <Charcoal/Renderer/Model.h>
 
 #include <Charcoal/Utility/OrthographicCameraController.h>
+#include <Charcoal/Utility/PerspectiveCameraController.h>
 
 #include <Charcoal/Debug/Instrumentor.h>
 

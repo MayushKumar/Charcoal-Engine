@@ -16,6 +16,11 @@ namespace Charcoal
 			: Title(title), Width(width), Height(height) {}
 	};
 
+	enum class WindowCursorMode
+	{
+		Normal = 0, HideAndLock, Hide
+	};
+
 	class Window
 	{
 	public:
@@ -31,6 +36,8 @@ namespace Charcoal
 
 		virtual void SetVSync(bool enabled) = 0;
 		virtual inline bool IsVSync() const = 0;
+
+		virtual void SetCursorMode(WindowCursorMode mode) = 0;
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		static Window* Create(const WindowProps& props = WindowProps());

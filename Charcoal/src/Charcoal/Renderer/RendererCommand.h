@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Charcoal/Core/Core.h"
-#include "VertexArray.h"
-#include "RendererAPI.h"
+#include "Charcoal/Renderer/VertexArray.h"
+#include "Charcoal/Renderer/RendererAPI.h"
+
+#include <glm/glm.hpp>
 
 namespace Charcoal
 {
@@ -25,6 +27,11 @@ namespace Charcoal
 		inline static void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
 		{
 			s_RendererAPI->SetViewport(x, y, width, height);
+		}
+
+		inline static void SetPolygonMode(PolygonMode mode)
+		{
+			s_RendererAPI->SetPolygonMode(mode);
 		}
 
 		inline static void Clear()

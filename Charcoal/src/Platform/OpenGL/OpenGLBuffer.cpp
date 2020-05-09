@@ -38,7 +38,7 @@ namespace Charcoal
 	}
 
 	// Index Buffer
-	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t size, uint32_t* indices) : m_Count(size)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t size, uint32_t* indices) : m_Size(size)
 	{
 		CH_PROFILE_FUNCTION();
 

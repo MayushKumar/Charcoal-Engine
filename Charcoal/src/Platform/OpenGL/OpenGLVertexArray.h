@@ -14,7 +14,7 @@ namespace Charcoal
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
-		virtual void AddVertexBuffer(const Ref<VertexBuffer> buffer) override;
+		virtual void AddVertexBuffer(const Ref<VertexBuffer> buffer, uint32_t attribOffset = 0) override;
 		virtual void SetIndexBuffer(const Ref<IndexBuffer> buffer) override;
 
 		virtual IndexBuffer* GetIndexBuffer() const override { return m_IndexBuffer.get(); }

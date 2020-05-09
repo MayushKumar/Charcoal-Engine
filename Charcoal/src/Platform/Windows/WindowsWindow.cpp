@@ -60,14 +60,16 @@ namespace Charcoal
 		//GLFW callbacks
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			data.EventCallback(WindowClosedEvent());
+			WindowClosedEvent event;
+			data.EventCallback(event);
 			});
 
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			data.Width = width;
 			data.Height = height;
-			data.EventCallback(WindowResizeEvent(width, height));
+			WindowResizeEvent event = WindowResizeEvent(width, height);
+			data.EventCallback(event);
 			});
 	
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -77,17 +79,20 @@ namespace Charcoal
 			{
 				case GLFW_PRESS:
 				{
-					data.EventCallback(KeyPressedEvent(key, false));
+					KeyPressedEvent event = KeyPressedEvent(key, false);
+					data.EventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					data.EventCallback(KeyReleasedEvent(key));
+					KeyReleasedEvent event = KeyReleasedEvent(key);
+					data.EventCallback(event);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					data.EventCallback(KeyPressedEvent(key, true));
+					KeyPressedEvent event = KeyPressedEvent(key, true);
+					data.EventCallback(event);
 					break;
 				}
 			}
@@ -95,7 +100,8 @@ namespace Charcoal
 
 		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int character) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			data.EventCallback(KeyTypedEvent(character));
+			KeyTypedEvent event = KeyTypedEvent(character);
+			data.EventCallback(event);
 			});
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
@@ -105,12 +111,14 @@ namespace Charcoal
 			{
 				case GLFW_PRESS:
 				{
-					data.EventCallback(MouseButtonPressedEvent(button));
+					MouseButtonPressedEvent event = MouseButtonPressedEvent(button);
+					data.EventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					data.EventCallback(MouseButtonReleasedEvent(button));
+					MouseButtonReleasedEvent event = MouseButtonReleasedEvent(button);
+					data.EventCallback(event);
 					break;
 				}
 			}
@@ -118,12 +126,14 @@ namespace Charcoal
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			data.EventCallback(MouseScrolledEvent((float)xOffset, (float)yOffset));
+			MouseScrolledEvent event = MouseScrolledEvent((float)xOffset, (float)yOffset);
+			data.EventCallback(event);
 			});
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-			data.EventCallback(MouseMovedEvent((float)xPos, (float)yPos));
+			MouseMovedEvent event = MouseMovedEvent((float)xPos, (float)yPos);
+			data.EventCallback(event);
 			});
 	}
 
@@ -149,6 +159,25 @@ namespace Charcoal
 		else
 			glfwSwapInterval(0);
 		m_Data.VSync = enabled;
+	}
+
+	void WindowsWindow::SetCursorMode(WindowCursorMode mode)
+	{
+		switch (mode)
+		{
+		case WindowCursorMode::Normal:
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			break;
+		case WindowCursorMode::Hide:
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			break;
+		case WindowCursorMode::HideAndLock:
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			break;
+		default:
+			CH_CORE_ASSERT(false, "Invalid Window Cursor Mode");
+			break;
+		}
 	}
 
 }

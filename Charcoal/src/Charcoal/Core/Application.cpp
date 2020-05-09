@@ -89,11 +89,14 @@ namespace Charcoal {
 		dispatcher.Dispatch<WindowResizeEvent>(CH_BIND_EVENT_FUNC(Application::OnWindowResize));
 		dispatcher.Dispatch<WindowClosedEvent>(CH_BIND_EVENT_FUNC(Application::OnWindowClose));
 
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+		if (!m_Minimized)
 		{
-			(*--it)->OnEvent(event);
-			if (event.Handled())
-				break;
+			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
+			{
+				(*--it)->OnEvent(event);
+				if (event.Handled())
+					break;
+			}
 		}
 	}
 

@@ -74,6 +74,8 @@ namespace Charcoal
 			CalculateOffsetAndStride();
 		}
 
+		void AddElement(BufferElement element) { m_Elements.push_back(element); CalculateOffsetAndStride(); }
+
 		inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 		inline uint32_t GetStride() const{ return m_Stride; }
 
@@ -85,6 +87,7 @@ namespace Charcoal
 	private:
 		void CalculateOffsetAndStride()
 		{
+			m_Stride = 0;
 			uint32_t offset = 0;
 			for (auto& element : m_Elements)
 			{

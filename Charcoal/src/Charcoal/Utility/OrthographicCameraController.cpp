@@ -37,7 +37,6 @@ namespace Charcoal
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<KeyPressedEvent>(CH_BIND_EVENT_FUNC(OrthographicCameraController::OnKeyPressed));
 		dispatcher.Dispatch<MouseScrolledEvent>(CH_BIND_EVENT_FUNC(OrthographicCameraController::OnMouseScrolled));
 		dispatcher.Dispatch<WindowResizeEvent>(CH_BIND_EVENT_FUNC(OrthographicCameraController::OnWindowResize));
 	}
@@ -47,11 +46,6 @@ namespace Charcoal
 		m_ZoomLevel -= e.GetYOffset() * 0.1f;
 		m_Camera.SetZoomLevel(m_ZoomLevel);
 		return true;
-	}
-
-	bool OrthographicCameraController::OnKeyPressed(KeyPressedEvent& e)
-	{
-		return false;
 	}
 
 	bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& e)

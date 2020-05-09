@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <map>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -16,6 +17,4 @@
 
 #ifdef CH_PLATFORM_WINDOWS
 	#include <Windows.h>
-#else 
-	#error Charcoal only supports Windows currently
 #endif

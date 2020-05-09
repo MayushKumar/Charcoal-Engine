@@ -1,4 +1,4 @@
-#include <chpch.h>
+#include "chpch.h"
 #include "OpenGLTexture.h"
 
 #include <glad/glad.h>
@@ -18,7 +18,7 @@ namespace Charcoal
 		{
 			CH_PROFILE_SCOPE("OpenGLTexture2D : stbi_load");
 
-			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+			data = stbi_load(m_Path.c_str(), &width, &height, &channels, 0);
 		}
 		CH_CORE_ASSERT(data, "Failed to load image!");
 		m_Width = width;
@@ -39,8 +39,10 @@ namespace Charcoal
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glGenerateTextureMipmap(m_RendererID);
+
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
 

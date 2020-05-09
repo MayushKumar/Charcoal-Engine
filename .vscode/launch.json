@@ -1,0 +1,87 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch - Sandbox Release",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Release-linux-x86_64/Sandbox/Sandbox",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+
+        {
+            "name": "Launch - Sandbox Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Debug-linux-x86_64/Sandbox/Sandbox",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Sandbox",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+
+        {
+            "name": "Launch - CMFCompiler Release",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Charcoal/tools/CMFCompiler/bin/Release-linux-x86_64/CMFCompiler/CMFCompiler",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Charcoal/tools/CMFCompiler/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+
+        {
+            "name": "Launch - CMFCompiler Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Charcoal/tools/CMFCompiler/bin/Debug-linux-x86_64/CMFCompiler/CMFCompiler",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Charcoal/tools/CMFCompiler/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

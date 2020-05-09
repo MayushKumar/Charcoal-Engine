@@ -1,6 +1,8 @@
 #include <chpch.h>
 #include "OpenGLRendererAPI.h"
 
+#include "Charcoal/Renderer/RendererCommand.h"
+
 #include <glad/glad.h>
 
 namespace Charcoal
@@ -26,6 +28,22 @@ namespace Charcoal
 		CH_PROFILE_FUNCTION();
 
 		glViewport(x, y, width, height);
+	}
+
+	void OpenGLRendererAPI::SetPolygonMode(PolygonMode mode)
+	{
+		switch (mode)
+		{
+		case PolygonMode::Fill:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			break;
+		case PolygonMode::Lines:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			break;
+		case PolygonMode::Points:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+			break;
+		}
 	}
 
 	void OpenGLRendererAPI::Clear()

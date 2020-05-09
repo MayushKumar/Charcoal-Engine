@@ -2,6 +2,11 @@ workspace "Charcoal Engine"
 	architecture "x64"
 	configurations{ "Debug", "Release" }
 	startproject "Sandbox"
+	
+	flags
+	{
+		"MultiProcessorCompile"
+	}
 
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -16,6 +21,10 @@ workspace "Charcoal Engine"
 		include "Charcoal/vendor/GLFW"
 		include "Charcoal/vendor/Glad"
 		include "Charcoal/vendor/ImGui"
+	group ""
+
+	group "Tools"
+		include "Charcoal/tools/CMFCompiler"
 	group ""
 
 	project "Charcoal"
@@ -44,7 +53,9 @@ workspace "Charcoal Engine"
 			"%{IncludeDir.Glad}",
 			"%{IncludeDir.ImGui}",
 			"%{IncludeDir.GLM}",
-			"%{IncludeDir.stb_image}"
+			"%{IncludeDir.stb_image}",
+			"%{IncludeDir.tinyobjloader}",
+			"%{IncludeDir.tinygltf}"
 		}
 
 		links
@@ -68,6 +79,13 @@ workspace "Charcoal Engine"
 			defines
 			{
 				"CH_PLATFORM_WINDOWS"
+			}
+
+		filter "system:linux"
+			toolset "gcc"
+			defines
+			{
+				"CH_PLATFORM_LINUX"
 			}
 
 		filter "configurations:Debug"
@@ -118,6 +136,23 @@ workspace "Charcoal Engine"
 			defines
 			{
 				"CH_PLATFORM_WINDOWS"
+			}
+
+		filter "system:linux"
+			toolset "gcc"
+			links
+			{
+				"GLFW",
+				"Glad",
+				"ImGui",
+				"X11",
+				"dl",
+				"pthread",
+			}
+
+			defines
+			{
+				"CH_PLATFORM_LINUX"
 			}
 
 		filter "configurations:Debug"
