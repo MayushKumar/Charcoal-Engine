@@ -104,14 +104,14 @@ namespace Charcoal
 		BufferLayout layout(
 			{
 				{ShaderDataType::Float3, "a_Position"},
-				{ShaderDataType::Float2, "a_TexCoords"}
+				{ShaderDataType::Float2, "a_TexCoord"}
 			});
 
 		float squareVertices[5 * 4] = {
 			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f
 		};
 		unsigned int squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 
@@ -125,6 +125,7 @@ namespace Charcoal
 		m_Storage->QuadVertexArray = vertexArray;
 
 		m_Storage->WhiteTexture = Texture2D::Create(1, 1, { 1.0f, 1.0f, 1.0f, 1.0f });
+		m_Storage->ZPosCounter = 1.0f;
 	}
 
 	void Renderer2D::ShutDown()
@@ -139,6 +140,7 @@ namespace Charcoal
 
 	void Renderer2D::EndScene()
 	{
+		m_Storage->ZPosCounter = 1.0f;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& scale, const glm::vec4& colour)
@@ -150,11 +152,13 @@ namespace Charcoal
 	{
 		m_Storage->TextureShader->Bind();
 		m_Storage->TextureShader->SetMat4("m_ViewProjection", m_SceneData->ViewProjectionMatrix);
-		m_Storage->TextureShader->SetMat4("m_Transform", glm::translate(glm::mat4(1.0f), glm::vec3(position, 1.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(scale, 1.0f)));
+		m_Storage->TextureShader->SetMat4("m_Transform", glm::translate(glm::mat4(1.0f), glm::vec3(position, m_Storage->ZPosCounter)) * glm::scale(glm::mat4(1.0f), glm::vec3(scale, 1.0f)));
 		m_Storage->TextureShader->SetVec4("u_Colour", tint);
 		m_Storage->QuadVertexArray->Bind();
 		texture->Bind();
 		RendererCommand::DrawIndexed(m_Storage->QuadVertexArray);
+
+		m_Storage->ZPosCounter += 0.001;
 	}
 
 }

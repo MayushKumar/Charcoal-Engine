@@ -11,7 +11,7 @@ namespace Charcoal
 	{
 		CH_PROFILE_FUNCTION();
 
-		m_ViewMatrix = glm::mat4(1.0f);
+		m_ViewMatrix = glm::translate(glm::mat4(1.0f), -m_Pos);
 		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}

@@ -10,8 +10,8 @@ class SandboxApp : public Charcoal::Application
 public:
 	SandboxApp()
 	{
-		//PushLayer(new Sandbox2D());
-		PushLayer(new Sandbox3D());
+		PushLayer(new Sandbox2D());
+		// PushLayer(new Sandbox3D());
 	}
 
 	~SandboxApp() {}

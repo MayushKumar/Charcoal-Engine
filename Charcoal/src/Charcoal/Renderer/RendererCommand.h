@@ -34,9 +34,14 @@ namespace Charcoal
 			s_RendererAPI->SetPolygonMode(mode);
 		}
 
-		inline static void Clear()
+		inline static void ClearColourBuffer()
 		{
-			s_RendererAPI->Clear();
+			s_RendererAPI->ClearColourBuffer();
+		}
+
+		inline static void ClearDepthBuffer()
+		{
+			s_RendererAPI->ClearDepthBuffer();
 		}
 
 		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)

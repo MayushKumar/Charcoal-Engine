@@ -60,6 +60,7 @@ namespace Charcoal
 			Ref<VertexArray> QuadVertexArray;
 			Ref<Shader> TextureShader;
 			Ref<Texture2D> WhiteTexture;
+			float ZPosCounter;
 		};
 
 		static SceneData* m_SceneData;

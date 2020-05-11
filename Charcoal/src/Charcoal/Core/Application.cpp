@@ -54,12 +54,15 @@ namespace Charcoal {
 			m_LastFrameTime = time;
 
 			RendererCommand::SetClearColour({ 0.1f, 0.1f, 0.1f, 1.0f });
-			RendererCommand::Clear();
+			RendererCommand::ClearColourBuffer();
 
 			if (!m_Minimized)
 			{
 				for (Layer* layer : m_LayerStack)
+				{
 					layer->OnUpdate(timestep);
+					RendererCommand::ClearDepthBuffer();
+				}
 			}
 
 			m_ImGuiLayer->Begin();
