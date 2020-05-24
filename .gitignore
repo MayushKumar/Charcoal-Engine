@@ -4,7 +4,7 @@ bin/
 bin-int/
 
 # Files
-Charcoal Engine.sln
+Charcoal\ Engine.sln
 *.user
 *.vcxproj
 *.vcxproj.*

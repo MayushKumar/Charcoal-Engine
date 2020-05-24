@@ -2,7 +2,6 @@
 #include "OrthographicCamera.h"
 
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/string_cast.hpp>
 
 namespace Charcoal
 {
@@ -12,7 +11,7 @@ namespace Charcoal
 		CH_PROFILE_FUNCTION();
 
 		m_ViewMatrix = glm::translate(glm::mat4(1.0f), -m_Pos);
-		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, 1.0f, -1.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
@@ -39,7 +38,7 @@ namespace Charcoal
 		CH_PROFILE_FUNCTION();
 
 		m_AspectRatio = aspectRatio;
-		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, 1.0f, -1.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
@@ -48,7 +47,7 @@ namespace Charcoal
 		CH_PROFILE_FUNCTION();
 
 		m_ZoomLevel = zoomLevel;
-		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
+		m_ProjectionMatrix = glm::ortho(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel, 1.0f, -1.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 

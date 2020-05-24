@@ -15,7 +15,7 @@ namespace Charcoal
 		virtual void SetPolygonMode(PolygonMode mode) override;
 		virtual void ClearColourBuffer() override;
 		virtual void ClearDepthBuffer() override;
-		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) override;
+		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indicesCount) override;
 	};
 
 }

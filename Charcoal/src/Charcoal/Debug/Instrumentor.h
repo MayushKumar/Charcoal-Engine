@@ -96,7 +96,7 @@ namespace Charcoal
 	#define CH_PROFILE_END_SESSION() ::Charcoal::Instrumentor::Get().EndSession()
 	#define CH_PROFILE_SCOPE(name) ::Charcoal::InstrumentorTimer timer##__LINE__(name)
 	
-	#ifdef _MS_VER
+	#ifdef _MSC_VER
 		#define CH_PROFILE_FUNCTION() CH_PROFILE_SCOPE(__FUNCSIG__)
 	#elif defined __GNUC__
 		#define CH_PROFILE_FUNCTION() CH_PROFILE_SCOPE(__func__)

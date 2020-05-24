@@ -49,8 +49,8 @@ namespace Charcoal
 			s_GLFWInitialized = true;
 		}
 
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE); // TODO: Remove OpenGL specific code from this file
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-
 		m_Context = new OpenGLContext(m_Window);
 		m_Context->Init();
 

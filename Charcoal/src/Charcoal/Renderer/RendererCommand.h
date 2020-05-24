@@ -44,9 +44,12 @@ namespace Charcoal
 			s_RendererAPI->ClearDepthBuffer();
 		}
 
-		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)
+		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indicesCount = 0)
 		{
-			s_RendererAPI->DrawIndexed(vertexArray);
+			if(indicesCount == 0)
+				s_RendererAPI->DrawIndexed(vertexArray, vertexArray->GetIndexBuffer()->GetCount());
+			else
+				s_RendererAPI->DrawIndexed(vertexArray, indicesCount);
 		}
 
 	private:

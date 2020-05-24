@@ -29,7 +29,7 @@ namespace Charcoal
 		virtual void SetPolygonMode(PolygonMode mode) = 0;
 		virtual void ClearColourBuffer() = 0;
 		virtual void ClearDepthBuffer() = 0;
-		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) = 0;
+		virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indicesCount) = 0;
 
 	private:
 		static API s_API;

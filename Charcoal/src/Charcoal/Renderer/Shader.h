@@ -27,6 +27,8 @@ namespace Charcoal
 		virtual void SetVec4(const std::string name, const glm::vec4& vec) const = 0;
 		virtual void SetFloat(const std::string name, float value) const = 0;
 		virtual void SetInt(const std::string name, int value) const = 0;
+		virtual void SetIntArray(const std::string name, uint32_t count, int32_t* value) const = 0;
+		virtual void SetUIntArray(const std::string name, uint32_t count, uint32_t* value) const = 0;
 
 	};
 

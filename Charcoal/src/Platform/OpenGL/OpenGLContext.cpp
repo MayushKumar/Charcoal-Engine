@@ -20,10 +20,10 @@ namespace Charcoal
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		CH_CORE_ASSERT(status, "Failed to initialize Glad");
 		CH_CORE_INFO("Graphics Vendor: {0}\n\t\t\tRenderer: {1}\n\t\t\tOpenGL Version: {2}\n\t\t\tGLSL Version: {3}", glGetString(GL_VENDOR), glGetString(GL_RENDERER), glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
-		
+
 		glFrontFace(GL_CCW);
 		glEnable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
+		// glEnable(GL_DEPTH_TEST);
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback((GLDEBUGPROC)[](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {

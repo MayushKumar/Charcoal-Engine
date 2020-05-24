@@ -106,12 +106,6 @@ namespace Charcoal
 			glDeleteShader(shaderID);
 		}
 
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR)
-		{
-			CH_CORE_ERROR(err);
-		}
-
 		m_RendererID = program;
 	}
 
@@ -212,6 +206,16 @@ namespace Charcoal
 	void OpenGLShader::SetInt(const std::string name, int value) const
 	{
 		glUniform1i(GetUniformLocation(name), value);
+	}
+
+	void OpenGLShader::SetIntArray(const std::string name, uint32_t count, int32_t* value) const
+	{
+		glUniform1iv(GetUniformLocation(name), count, value);
+	}
+
+	void OpenGLShader::SetUIntArray(const std::string name, uint32_t count, uint32_t* value) const
+	{
+		glUniform1uiv(GetUniformLocation(name), count, value);
 	}
 
 }

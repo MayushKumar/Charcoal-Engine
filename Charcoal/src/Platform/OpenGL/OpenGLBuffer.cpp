@@ -6,6 +6,16 @@
 namespace Charcoal
 {
 	// Vertex Buffer
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size) : m_RendererID()
+	{
+		CH_PROFILE_FUNCTION();
+
+		glCreateBuffers(1, &m_RendererID);
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size, float* vertices) : m_RendererID()
 	{
 		CH_PROFILE_FUNCTION();
@@ -35,6 +45,15 @@ namespace Charcoal
 		CH_PROFILE_FUNCTION();
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetData(float* vertices, uint32_t size) const
+	{
+		CH_PROFILE_FUNCTION();
+
+		Bind();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, vertices);
+		//glNamedBufferSubData(m_RendererID, 0, size, vertices);
 	}
 
 	// Index Buffer

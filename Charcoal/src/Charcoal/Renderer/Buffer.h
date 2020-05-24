@@ -106,10 +106,12 @@ namespace Charcoal
 	public:
 		virtual ~VertexBuffer() {}
 
+		static Ref<VertexBuffer> Create(uint32_t size);
 		static Ref<VertexBuffer> Create(uint32_t size, float* vertices);
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
+		virtual void SetData(float* vertices, uint32_t size) const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual inline const BufferLayout& GetLayout() const = 0;
 	};
