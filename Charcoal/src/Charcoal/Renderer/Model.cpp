@@ -1,6 +1,8 @@
 #include "chpch.h"
 #include "Model.h"
 
+#include "ShaderManager.h"
+
 #include <fstream>
 
 namespace Charcoal
@@ -9,6 +11,12 @@ namespace Charcoal
 	Model::Model(const char* filePath)
 	{
 		LoadModel(filePath);
+	}
+
+	void Model::SetTransform(glm::mat4 transform)
+	{
+		m_Transform = transform;
+		m_NormalMatrix = glm::transpose(glm::inverse(glm::mat3(m_Transform)));
 	}
 
 	void Model::LoadModel(const char* filePath)
@@ -39,46 +47,7 @@ namespace Charcoal
 
 		for (uint32_t i = 0; i < materialCount; i++)
 		{
-			Ref<Material> material = CreateRef<Material>();
-
-			uint32_t nameSize = 0;
-			fileStream.read((char*)&nameSize, sizeof(CMFFormat::Material::NameSize));
-			char* name = new char[nameSize];
-			fileStream.read(name, nameSize);
-			material->m_Name = name;
-			delete[] name;
-
-			uint32_t ID = 0;
-			fileStream.read((char*)&ID, sizeof(CMFFormat::Material::ID));
-
-			fileStream.read((char*)material->m_AmbientColour, sizeof(CMFFormat::Material::AmbientColour));
-			fileStream.read((char*)material->m_DiffuseColour, sizeof(CMFFormat::Material::DiffuseColour));
-			fileStream.read((char*)&material->m_MetallicFactor, sizeof(CMFFormat::Material::MetallicFactor));
-			fileStream.read((char*)&material->m_RoughnessFactor, sizeof(CMFFormat::Material::RoughnessFactor));
-
-			uint32_t textureCount = 0;
-			fileStream.read((char*)&textureCount, sizeof(CMFFormat::Material::TextureCount));
-			material->m_Textures.resize(textureCount);
-			material->m_TextureTypes.resize(textureCount);
-
-			for (uint32_t j = 0; j < textureCount; j++)
-			{
-				TextureType type = TextureType::None;
-				fileStream.read((char*)&type, sizeof(CMFFormat::Material::Texture::TextureType));
-				material->m_TextureTypes[j] = type;
-
-				uint32_t relativeFilePathSize = 0;
-				fileStream.read((char*)&relativeFilePathSize, sizeof(CMFFormat::Material::Texture::RelativeFilepathSize));
-				char* relativeFilePath = new char[relativeFilePathSize];
-				fileStream.read(relativeFilePath, relativeFilePathSize);
-
-				Ref<Texture2D> texture = Texture2D::Create(directoryPath + relativeFilePath);
-				material->m_Textures[j] = texture;
-
-				delete[] relativeFilePath;
-			}
-
-			m_Materials[i] = material;
+			m_Materials[i] = LoadPBRMaterial(fileStream, directoryPath);
 		}
 
 		uint32_t meshCount = 0;
@@ -146,6 +115,64 @@ namespace Charcoal
 		delete[] footer;
 
 		GenerateVertexArray();
+	}
+
+	Ref<PBRMaterial> Model::LoadPBRMaterial(std::ifstream& fileStream, const std::string& directoryPath)
+	{
+		Ref<PBRMaterial> material = CreateRef<PBRMaterial>();
+		material->m_Shader = ShaderManager::GetShader("PBR");
+		uint32_t nameSize = 0;
+		fileStream.read((char*)&nameSize, sizeof(CMFFormat::Material::NameSize));
+		char* name = new char[nameSize];
+		fileStream.read(name, nameSize);
+		material->m_Name = name;
+		delete[] name;
+
+		uint32_t ID = 0;
+		fileStream.read((char*)&ID, sizeof(CMFFormat::Material::ID));
+
+		fileStream.read((char*)material->m_AmbientColour, sizeof(CMFFormat::Material::AmbientColour));
+		fileStream.read((char*)material->m_DiffuseColour, sizeof(CMFFormat::Material::DiffuseColour));
+		fileStream.read((char*)&material->m_MetallicFactor, sizeof(CMFFormat::Material::MetallicFactor));
+		fileStream.read((char*)&material->m_RoughnessFactor, sizeof(CMFFormat::Material::RoughnessFactor));
+
+		uint32_t textureCount = 0;
+		fileStream.read((char*)&textureCount, sizeof(CMFFormat::Material::TextureCount));
+
+		for (uint32_t j = 0; j < textureCount; j++)
+		{
+			TextureType type = TextureType::None;
+			fileStream.read((char*)&type, sizeof(CMFFormat::Material::Texture::TextureType));
+
+			uint32_t relativeFilePathSize = 0;
+			fileStream.read((char*)&relativeFilePathSize, sizeof(CMFFormat::Material::Texture::RelativeFilepathSize));
+			char* relativeFilePath = new char[relativeFilePathSize];
+			fileStream.read(relativeFilePath, relativeFilePathSize);
+
+			Ref<Texture2D> texture = Texture2D::Create(directoryPath + relativeFilePath);
+
+			switch (type)
+			{
+			case TextureType::Albedo:
+				material->m_AlbedoMap = texture;
+				break;
+			case TextureType::Normal:
+				material->m_NormalMap = texture;
+				break;
+			case TextureType::Metallic:
+				material->m_MetallicMap = texture;
+				break;
+			case TextureType::Roughness:
+				material->m_RoughnessMap = texture;
+				break;
+			case TextureType::None:
+				CH_CORE_ERROR("Texture type not supported for {0}", directoryPath + relativeFilePath);
+				break;
+			}
+			
+			delete[] relativeFilePath;
+		}
+		return material;
 	}
 
 	void Model::GenerateVertexArray()

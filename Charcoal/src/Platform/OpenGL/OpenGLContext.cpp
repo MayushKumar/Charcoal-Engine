@@ -23,8 +23,8 @@ namespace Charcoal
 
 		glFrontFace(GL_CCW);
 		glEnable(GL_CULL_FACE);
-		// glEnable(GL_DEPTH_TEST);
-
+		glEnable(GL_DEPTH_TEST);
+		
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback((GLDEBUGPROC)[](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
 			switch(severity)

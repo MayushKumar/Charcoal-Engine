@@ -28,7 +28,5 @@ private:
 	Charcoal::Ref<Charcoal::VertexArray> m_SquareVA;
 	Charcoal::Ref<Charcoal::Texture2D> m_BackgroundTexture;
 	Charcoal::Ref<Charcoal::Texture2D> m_LogoTexture;
-
-	Charcoal::ShaderLibrary m_ShaderLibrary;
-
+	
 };

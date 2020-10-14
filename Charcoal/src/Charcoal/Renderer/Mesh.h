@@ -15,7 +15,7 @@ namespace Charcoal
 		{
 			enum class VertexAttribType
 			{
-				None = 0, Position, Normal, TexCoord
+				None = 0, Position, Normal, Tangent, Bitangent, TexCoord
 			};
 
 			std::string Name;

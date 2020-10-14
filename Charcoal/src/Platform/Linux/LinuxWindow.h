@@ -1,0 +1,50 @@
+#pragma once
+
+#include "Charcoal/Core/Window.h"
+
+#include "Charcoal/Renderer/GraphicsContext.h"
+
+struct GLFWwindow;
+
+namespace Charcoal
+{
+
+	class LinuxWindow : public Window
+	{
+	public:
+		LinuxWindow(const WindowProps& props);
+		~LinuxWindow();
+
+		void OnUpdate() override;
+
+		inline unsigned int GetWidth() const override { return m_Data.Width; }
+		inline unsigned int GetHeight() const override { return m_Data.Height; }
+		inline void* GetNativeWindow() const override { return m_Window; }
+		void SetVSync(bool enabled) override;
+		inline bool IsVSync() const override { return m_Data.VSync; }
+		void SetCursorMode(WindowCursorMode mode) override;
+
+		void SetEventCallback(const EventCallbackFn& eventCallback) override { m_Data.EventCallback = eventCallback; }
+
+	private:
+		void Init(const WindowProps& props);
+		void ShutDown();
+
+	private:
+		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
+
+		struct WindowData
+		{
+			std::string Title;
+			unsigned int Width, Height;
+			bool VSync;
+			WindowCursorMode CursorMode;
+
+			EventCallbackFn EventCallback;
+		};
+		WindowData m_Data;
+		
+	};
+
+}

@@ -9,7 +9,8 @@ namespace Charcoal
 	class PerspectiveCamera
 	{
 	public:
-		PerspectiveCamera(float aspectRatio, float FOV, float nearPlane, float farPlane);
+        PerspectiveCamera() {};
+        PerspectiveCamera(float aspectRatio, float FOV, float nearPlane, float farPlane);
 
 		void SetPosition(const glm::vec3& pos);
 		void SetRotation(const glm::quat& rotation);

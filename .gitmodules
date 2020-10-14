@@ -13,3 +13,6 @@
 [submodule "Charcoal/tools/CMFCompiler/vendor/tinyobjloader"]
 	path = Charcoal/tools/CMFCompiler/vendor/tinyobjloader
 	url = https://github.com/tinyobjloader/tinyobjloader
+[submodule "tools/CMFCompiler/vendor/tinyobjloader"]
+	path = tools/CMFCompiler/vendor/tinyobjloader
+	url = https://github.com/tinyobjloader/tinyobjloader

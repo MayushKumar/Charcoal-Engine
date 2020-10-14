@@ -4,8 +4,6 @@ void Sandbox2D::OnAttach()
 {
 	CH_PROFILE_FUNCTION();
 
-	m_ShaderLibrary = Charcoal::ShaderLibrary();
-
 	float squareVertices[5 * 4] = {
 		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
 		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
@@ -22,7 +20,6 @@ void Sandbox2D::OnAttach()
 		{Charcoal::ShaderDataType::Float3, "a_Position"},
 		{Charcoal::ShaderDataType::Float2, "a_TexCoord"}
 	};
-
 	squareVB = Charcoal::VertexBuffer::Create(sizeof(squareVertices), squareVertices);
 	squareVB->SetLayout(layout);
 
@@ -46,6 +43,9 @@ void Sandbox2D::OnUpdate(Charcoal::Timestep timestep)
 	}
 	{
 		CH_PROFILE_SCOPE("Render");
+		Charcoal::RendererCommand::SetClearColour({0.1f, 0.1f, 0.1f, 1.0f});
+		Charcoal::RendererCommand::ClearColourBuffer();
+		
 		Charcoal::Renderer2D::ResetStats();
 		Charcoal::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		 for (int32_t y = 0; y < m_Height; y++)

@@ -10,23 +10,26 @@
 #define BIT(x) 1 << x
 
 #ifdef CH_ENABLE_ASSERTS
-	#ifdef CH_PLATFORM_WINDOWS
-		#define CH_CORE_ASSERT(x, ...) if (!x) { CH_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); }
-		#define CH_ASSERT(x, ...) if (!x) { CH_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); }
-	#elif defined CH_PLATFORM_LINUX
-		#include <signal.h>
-		#define CH_CORE_ASSERT(x, ...) if (!x) { CH_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); raise(SIGTRAP); }
-		#define CH_ASSERT(x, ...) if (!x) { CH_ERROR("Assertion failed: {0}", __VA_ARGS__); raise(SIGTRAP); }
-	#endif
+#ifdef _MSC_VER
+#define CH_CORE_ASSERT(x, ...) if (!(x)) { CH_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); }
+#define CH_ASSERT(x, ...) if (!(x)) { CH_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); }
+#elif defined __GNUC__ && CH_PLATFORM_LINUX
+#include <signal.h>
+#define CH_CORE_ASSERT(x, ...) if (!(x)) { CH_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); raise(SIGTRAP); }
+#define CH_ASSERT(x, ...) if (!(x)) { CH_ERROR("Assertion failed: {0}", __VA_ARGS__); raise(SIGTRAP); }
+#elif defined __clang__ || __GNUC__
+#define CH_CORE_ASSERT(x, ...) if (!(x)) { CH_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); asm("int $3"); }
+#define CH_ASSERT(x, ...) if (!(x)) { CH_ERROR("Assertion failed: {0}", __VA_ARGS__); asm("int $3"); }
+#endif
 #else
-	#define CH_CORE_ASSERT(x, ...)
-	#define CH_ASSERT(x, ...)
+#define CH_CORE_ASSERT(x, ...)
+#define CH_ASSERT(x, ...)
 #endif
 
 #define CH_BIND_EVENT_FUNC(func) std::bind(&func, this, std::placeholders::_1)
 
 namespace Charcoal
-{
+{	
 	template<typename T>
 	using Scope = std::unique_ptr<T>;
 	template<typename T, typename ... Args>

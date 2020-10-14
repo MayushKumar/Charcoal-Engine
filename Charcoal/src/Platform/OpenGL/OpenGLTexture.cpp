@@ -1,6 +1,8 @@
 #include "chpch.h"
 #include "OpenGLTexture.h"
 
+#include "Charcoal/Core/Utilities.h"
+
 #include <glad/glad.h>
 #include <stb_image.h>
 #include <glm/glm.hpp>
@@ -8,28 +10,23 @@
 namespace Charcoal
 {
 
+	////////////////////  Texture2D  ////////////////////
+	
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path) : m_Path(path)
 	{
 		CH_PROFILE_FUNCTION();
 
-		int width, height, channels;
-		stbi_set_flip_vertically_on_load(true);
-		stbi_uc* data;
-		{
-			CH_PROFILE_SCOPE("OpenGLTexture2D : stbi_load");
-
-			data = stbi_load(m_Path.c_str(), &width, &height, &channels, 0);
-		}
-		CH_CORE_ASSERT(data, "Failed to load image!");
-		m_Width = width;
-		m_Height = height;
+		ImageUtils::STB_Image image = ImageUtils::LoadImage(path, true);
+		
+		m_Width = image.Width;
+		m_Height = image.Height;
 
 		GLenum internalFormat = 0, dataFormat = 0;
-		if (channels == 4)
+		if (image.Channels == 4)
 		{
 			internalFormat = GL_RGBA8;
 			dataFormat = GL_RGBA;
-		} else if (channels == 3)
+		} else if (image.Channels == 3)
 		{
 			internalFormat = GL_RGB8;
 			dataFormat = GL_RGB;
@@ -41,26 +38,17 @@ namespace Charcoal
 
 		glGenerateTextureMipmap(m_RendererID);
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, image.Data);
 
-		stbi_image_free(data);
+		stbi_image_free(image.Data);
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height, const glm::vec4& colour)
+	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height, void* data)
 	{
 		CH_PROFILE_FUNCTION();
-
-		unsigned int data = 0;
-		data |= (int)((float)255 * colour.r);
-		data <<= 8;
-		data |= (int)((float)255 * colour.g);
-		data <<= 8;
-		data |= (int)((float)255 * colour.b);
-		data <<= 8;
-		data |= (int)((float)255 * colour.a);
 
 		m_Width = width;
 		m_Height = height;
@@ -71,7 +59,7 @@ namespace Charcoal
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, &data);
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	}
 
 	OpenGLTexture2D::~OpenGLTexture2D()
@@ -85,6 +73,48 @@ namespace Charcoal
 	{
 		CH_PROFILE_FUNCTION();
 
+		glBindTextureUnit(slot, m_RendererID);
+	}
+
+	
+	////////////////////  CubeMap  ////////////////////
+
+	OpenGLCubeMap::OpenGLCubeMap(const std::string& path)
+	{
+		CH_PROFILE_FUNCTION();
+		
+		glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &m_RendererID);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererID);
+
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+		static const char* fileNames[6] = {"px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"};
+		
+		for (uint32_t i = 0; i < 6; i++)
+		{
+			ImageUtils::STB_Image image = ImageUtils::LoadImage(path + fileNames[i], false);
+			// glTextureStorage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 1, GL_RGBA8, image.Width, image.Height);
+			// glTextureSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, 0, 0, image.Width, image.Height, GL_RGBA, GL_UNSIGNED_BYTE, image.Data);
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, image.Width, image.Height, 0, GL_RGB, GL_UNSIGNED_BYTE, image.Data);
+			stbi_image_free(image.Data);
+		}
+	}
+
+	OpenGLCubeMap::~OpenGLCubeMap()
+	{
+		CH_PROFILE_FUNCTION();
+		
+		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void OpenGLCubeMap::Bind(uint32_t slot) const
+	{
+		CH_PROFILE_FUNCTION();
+		
 		glBindTextureUnit(slot, m_RendererID);
 	}
 

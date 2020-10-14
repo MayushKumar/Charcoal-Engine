@@ -56,7 +56,7 @@ namespace Charcoal
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
-
+		
 		//GLFW callbacks
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

@@ -32,12 +32,14 @@ namespace Charcoal
 	{
 		m_AspectRatio = aspectRatio;
 		m_ProjectionMatrix = glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_NearPlane, m_FarPlane);
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 	void PerspectiveCamera::SetFOV(float FOV)
 	{
 		m_FOV = FOV;
 		m_ProjectionMatrix = glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_NearPlane, m_FarPlane);
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 	void PerspectiveCamera::SetNearAndFarPlane(float nearPlane, float farPlane)
@@ -45,6 +47,7 @@ namespace Charcoal
 		m_NearPlane = nearPlane;
 		m_FarPlane = farPlane;
 		m_ProjectionMatrix = glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_NearPlane, m_FarPlane);
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 	void PerspectiveCamera::Rotate(float pitch, float yaw, float roll)

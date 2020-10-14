@@ -1,7 +1,7 @@
 #include "chpch.h"
 #include "Buffer.h"
 
-#include "Renderer.h"
+#include "Charcoal/Renderer/RendererAPI.h"
 #include "Charcoal/Core/Core.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
@@ -10,7 +10,7 @@ namespace Charcoal
 
 	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
 		case RendererAPI::API::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
 		case RendererAPI::API::OpenGL:	return CreateRef<OpenGLVertexBuffer>(size);
@@ -21,7 +21,7 @@ namespace Charcoal
 
 	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, float* vertices)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
 		case RendererAPI::API::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
 		case RendererAPI::API::OpenGL:	return CreateRef<OpenGLVertexBuffer>(size, vertices);
@@ -32,7 +32,7 @@ namespace Charcoal
 
 	Ref<IndexBuffer> IndexBuffer::Create(uint32_t size, uint32_t* indices)
 	{
-		switch (Renderer::GetAPI())
+		switch (RendererAPI::GetAPI())
 		{
 		case	RendererAPI::API::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
 		case	RendererAPI::API::OpenGL:	return CreateRef<OpenGLIndexBuffer>(size, indices);

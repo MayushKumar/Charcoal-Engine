@@ -8,4 +8,5 @@ Charcoal\ Engine.sln
 *.user
 *.vcxproj
 *.vcxproj.*
+*~
 Makefile

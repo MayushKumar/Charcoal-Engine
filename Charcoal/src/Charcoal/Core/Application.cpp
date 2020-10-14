@@ -1,4 +1,4 @@
-#include "chpch.h"
+#include <chpch.h>
 
 #include "Charcoal/Core/Application.h"
 
@@ -8,9 +8,11 @@
 #include "Charcoal/Input/KeyCodes.h"
 
 #include "Charcoal/Renderer/RendererCommand.h"
-#include "Charcoal/Renderer/Renderer.h"
+#include "Charcoal/Renderer/Renderer3D.h"
+#include "Charcoal/Renderer/Renderer2D.h"
 
 #include <GLFW/glfw3.h>
+#include <imgui.h>
 
 namespace Charcoal {
 
@@ -26,7 +28,8 @@ namespace Charcoal {
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(CH_BIND_EVENT_FUNC(Application::OnEvent));
 
-		Renderer::Init();
+		RendererCommand::Init();
+		Renderer3D::Init();
 		Renderer2D::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
@@ -52,10 +55,7 @@ namespace Charcoal {
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
-
-			RendererCommand::SetClearColour({ 0.1f, 0.1f, 0.1f, 1.0f });
-			RendererCommand::ClearColourBuffer();
-
+			
 			if (!m_Minimized)
 			{
 				for (Layer* layer : m_LayerStack)
@@ -84,6 +84,7 @@ namespace Charcoal {
 		CH_PROFILE_FUNCTION();
 
 		Renderer2D::ShutDown();
+		Renderer3D::ShutDown();
 	}
 
 	void Application::OnEvent(Event& event)
@@ -92,8 +93,13 @@ namespace Charcoal {
 		dispatcher.Dispatch<WindowResizeEvent>(CH_BIND_EVENT_FUNC(Application::OnWindowResize));
 		dispatcher.Dispatch<WindowClosedEvent>(CH_BIND_EVENT_FUNC(Application::OnWindowClose));
 
+		ImGuiIO& imguiIO = ImGui::GetIO();
+		
 		if (!m_Minimized)
 		{
+			if(((event.GetCategoryFlags() | EventCategory::MouseInputEvent) && imguiIO.WantCaptureMouse) ||
+			   ((event.GetCategoryFlags() | EventCategory::KeyInputEvent) && imguiIO.WantCaptureKeyboard)) return;
+		
 			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 			{
 				(*--it)->OnEvent(event);

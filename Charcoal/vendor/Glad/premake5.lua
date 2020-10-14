@@ -19,16 +19,16 @@ project "Glad"
 	}
 
 	filter "system:windows"
-		--buildoptions { "-std=c11", "-lgdi32" }
+	--buildoptions { "-std=c11", "-lgdi32" }
 		systemversion "latest"
 
 	filter "system:linux"
 		toolset "gcc"
 
 	filter "configurations:Debug"
-			runtime "Debug"
-			symbols "On"
+		runtime "Debug"
+		symbols "On"
 
 	filter "configurations:Release"
-			runtime "Release"
-			optimize "On"
+		runtime "Release"
+		optimize "On"

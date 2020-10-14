@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--no-as-needed -ldl -lpthread CMakeFiles/CharcoalEditor.dir/src/CharcoalEditor.cpp.o CMakeFiles/CharcoalEditor.dir/src/EditorLayer.cpp.o -o CharcoalEditor  ../../Charcoal/libCharcoal.a ../../Charcoal/vendor/GLFW/libGLFW.a ../../Charcoal/vendor/Glad/libGlad.a ../../Charcoal/vendor/ImGui/libImGui.a 

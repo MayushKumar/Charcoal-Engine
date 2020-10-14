@@ -24,9 +24,22 @@ workspace "Charcoal Engine"
 	group ""
 
 	group "Tools"
-		include "Charcoal/tools/CMFCompiler"
+		include "tools/CMFCompiler"
+		include "tools/CharcoalEditor"
 	group ""
 
+	newoption
+	{
+	   trigger =  "toolset",
+	   value = "Compiler",
+	   description = "Choose toolset for compiling on windows",
+	   allowed =
+		  {
+			 { "clang", "Clang" },
+			 { "msvc",  "Visual Studio" }
+		  }
+	}
+	
 	project "Charcoal"
 		location "Charcoal"
 		kind "StaticLib"
@@ -39,8 +52,13 @@ workspace "Charcoal Engine"
 
 		files
 		{
-			"%{prj.name}/src/**.h",
-			"%{prj.name}/src/**.cpp",
+			"%{prj.name}/src/Charcoal/**.h",
+			"%{prj.name}/src/Charcoal/**.cpp",
+			"%{prj.name}/src/Charcoal.h",
+			"%{prj.name}/src/chpch.h",
+			"%{prj.name}/src/chpch.cpp",
+			"%{prj.name}/src/Platform/OpenGL/**.h",
+			"%{prj.name}/src/Platform/OpenGL/**.cpp",
 			"%{prj.name}/vendor/stb_image/stb_image.h",
 			"%{prj.name}/vendor/stb_image/stb_image.cpp"
 		}
@@ -74,11 +92,23 @@ workspace "Charcoal Engine"
 		pchheader "chpch.h"
 		pchsource "%{prj.name}/src/chpch.cpp"
 
+		filter "options:toolset=clang"
+			toolset "clang"
+			buildoptions
+			{
+			   "-Wno-deprecated-declarations"
+			}
+		
 		filter "system:windows"
 			systemversion "latest"
 			defines
 			{
 				"CH_PLATFORM_WINDOWS"
+			}
+			files
+			{
+				"%{prj.name}/src/Platform/Windows/**.h",
+				"%{prj.name}/src/Platform/Windows/**.cpp",
 			}
 
 		filter "system:linux"
@@ -86,6 +116,11 @@ workspace "Charcoal Engine"
 			defines
 			{
 				"CH_PLATFORM_LINUX"
+			}
+			files
+			{
+				"%{prj.name}/src/Platform/Linux/**.h",
+				"%{prj.name}/src/Platform/Linux/**.cpp",
 			}
 
 		filter "configurations:Debug"
@@ -111,7 +146,7 @@ workspace "Charcoal Engine"
 
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
+		
 		files
 		{
 			"%{prj.name}/src/**.h",
@@ -128,9 +163,24 @@ workspace "Charcoal Engine"
 
 		links
 		{
-			"Charcoal"
+		   "Charcoal",
+		   "GLFW",
+		   "Glad",
+		   "ImGui"
 		}
 
+		filter "options:toolset=clang"
+			toolset "gcc"
+--			links
+--			{
+--			   "shell32.lib",
+--			   "gdi32.lib"
+--			}
+--			linkoptions
+--			{
+--			   "-v"
+--			}
+		
 		filter "system:windows"
 			systemversion "latest"
 			defines
@@ -142,9 +192,6 @@ workspace "Charcoal Engine"
 			toolset "gcc"
 			links
 			{
-				"GLFW",
-				"Glad",
-				"ImGui",
 				"X11",
 				"dl",
 				"pthread",

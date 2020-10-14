@@ -1,0 +1,152 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imconfig.h
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui.cpp
+imgui.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui.h
+imgui_internal.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_internal.h
+ctype.h
+-
+stdio.h
+-
+stddef.h
+-
+stdint.h
+-
+Windows.h
+-
+windows.h
+-
+TargetConditionals.h
+-
+stb_sprintf.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/stb_sprintf.h
+Carbon/Carbon.h
+-
+imgui_user.inl
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_user.inl
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui.h
+imconfig.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imconfig.h
+float.h
+-
+stdarg.h
+-
+stddef.h
+-
+string.h
+-
+assert.h
+-
+stdint.h
+-
+imgui_user.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_user.h
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_demo.cpp
+imgui.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui.h
+ctype.h
+-
+limits.h
+-
+math.h
+-
+stdio.h
+-
+stdlib.h
+-
+stddef.h
+-
+stdint.h
+-
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_draw.cpp
+imgui.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui.h
+imgui_internal.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_internal.h
+stdio.h
+-
+alloca.h
+-
+malloc.h
+-
+stdlib.h
+-
+imstb_rectpack.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imstb_rectpack.h
+imstb_truetype.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imstb_truetype.h
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_internal.h
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+limits.h
+-
+imstb_textedit.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imstb_textedit.h
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_widgets.cpp
+imgui.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui.h
+imgui_internal.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imgui_internal.h
+ctype.h
+-
+stddef.h
+-
+stdint.h
+-
+imstb_textedit.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imstb_textedit.h
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imstb_rectpack.h
+stdlib.h
+-
+assert.h
+-
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imstb_textedit.h
+string.h
+-
+
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/imstb_truetype.h
+stb_truetype.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/stb_truetype.h
+stdio.h
+-
+stb_truetype.h
+/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/Charcoal/vendor/ImGui/stb_truetype.h
+math.h
+-
+math.h
+-
+math.h
+-
+math.h
+-
+math.h
+-
+stdlib.h
+-
+assert.h
+-
+string.h
+-
+string.h
+-
+

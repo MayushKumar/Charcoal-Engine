@@ -12,14 +12,20 @@ public:
 
 	void OnAttach() override;
 	void OnUpdate(Charcoal::Timestep timestep) override;
-	void OnEvent(Charcoal::Event& event) override;
+	void OnEvent(Charcoal::Event &event) override;
 	void OnImGuiRender() override;
 
+	bool OnKeyReleased(Charcoal::KeyReleasedEvent& e);
+
 private:
-	Charcoal::Ref<Charcoal::Model> m_Model;
+	Charcoal::Ref<Charcoal::Scene3D> m_Scene;
+
+	std::vector<Charcoal::Ref<Charcoal::Model>> m_Models;
+	uint32_t m_ModelIndex = 0;
 	Charcoal::PerspectiveCameraController m_CameraController;
+	glm::vec3 m_LightPos;
+	float m_LightStrength;
 
-	Charcoal::ShaderLibrary m_ShaderLibrary;
-
-	bool m_IsCameraEnabled  = true;
+	bool m_IsCameraEnabled = true;
+	bool m_IsModelRotating = true;
 };

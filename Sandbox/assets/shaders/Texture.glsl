@@ -69,4 +69,5 @@ void main()
 	if (v_TextureSlot == 29) Colour = texture(u_TextureSlots[29], v_TexCoord * v_TilingFactor) * v_Colour;
 	if (v_TextureSlot == 30) Colour = texture(u_TextureSlots[30], v_TexCoord * v_TilingFactor) * v_Colour;
 	if (v_TextureSlot == 31) Colour = texture(u_TextureSlots[31], v_TexCoord * v_TilingFactor) * v_Colour;
+
 }

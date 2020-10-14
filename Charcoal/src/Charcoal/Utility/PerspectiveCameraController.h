@@ -20,6 +20,9 @@ namespace Charcoal
 
 		void OnUpdate(Timestep timestep);
 		void OnEvent(Event& e);
+
+		void SetEnabled(bool enabled);
+
 		inline PerspectiveCamera& GetCamera() { return m_Camera; }
 
 	private:
@@ -29,6 +32,7 @@ namespace Charcoal
 	private:
 		PerspectiveCamera m_Camera;
 		bool m_IsZoomable;
+		bool m_Enabled;
 		glm::vec2 m_LastMousePos;
 		glm::vec2 m_Angles = {0.0f, 0.0f};
 		float m_DampeningFactor = 0.3f;

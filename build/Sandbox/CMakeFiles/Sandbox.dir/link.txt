@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--no-as-needed -ldl -lpthread CMakeFiles/Sandbox.dir/src/Sandbox2D.cpp.o CMakeFiles/Sandbox.dir/src/Sandbox3D.cpp.o CMakeFiles/Sandbox.dir/src/SandboxApp.cpp.o -o Sandbox  ../Charcoal/libCharcoal.a ../Charcoal/vendor/GLFW/libGLFW.a ../Charcoal/vendor/Glad/libGlad.a ../Charcoal/vendor/ImGui/libImGui.a 
