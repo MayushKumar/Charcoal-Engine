@@ -10,9 +10,6 @@
 [submodule "Charcoal/vendor/GLM"]
 	path = Charcoal/vendor/GLM
 	url = https://github.com/g-truc/glm
-[submodule "Charcoal/tools/CMFCompiler/vendor/tinyobjloader"]
-	path = Charcoal/tools/CMFCompiler/vendor/tinyobjloader
-	url = https://github.com/tinyobjloader/tinyobjloader
 [submodule "tools/CMFCompiler/vendor/tinyobjloader"]
 	path = tools/CMFCompiler/vendor/tinyobjloader
-	url = https://github.com/tinyobjloader/tinyobjloader
+	url = https://github.com/tinyobjloader/tinyobjloader.git
