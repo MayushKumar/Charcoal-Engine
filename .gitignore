@@ -2,6 +2,10 @@
 .vs/
 bin/
 bin-int/
+build/
+CMakeFiles/
+.cache/
+.clangd/
 
 # Files
 Charcoal\ Engine.sln
@@ -9,4 +13,9 @@ Charcoal\ Engine.sln
 *.vcxproj
 *.vcxproj.*
 *~
+\#*
 Makefile
+CMakeCache.txt
+compile_commands.json
+CharcoalProfile*
+Management.org

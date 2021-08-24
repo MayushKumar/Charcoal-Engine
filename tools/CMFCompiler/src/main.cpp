@@ -8,103 +8,9 @@
 #include <glm/gtc/matrix_access.hpp>
 #include <tiny_obj_loader.h>
 
-#define DEBUG_WITHOUT_INPUT 0
+#include "defines.h"
 
-#if defined CH_PLATFORM_WINDOWS
-	#define DEBUG_BREAK() __debugbreak()
-#elif defined CH_PLATFORM_LINUX
-	#define DEBUG_BREAK() asm("int $3")
-#endif
-
-enum class ShaderDataType // From "Charcoal/Renderer/Buffer.h"
-{
-	None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
-};
-
-enum class TextureType // From "Charcoal/Renderer/Model.h"
-{
-	None = 0, Albedo, Normal, Metallic, Roughness
-};
-
-enum class VertexAttribType // From "Charcoal/Renderer/Mesh.h" Mesh::VertexAttrib::VertexAttribType
-{
-	None = 0, Position, Normal, Tangent, Bitangent, TexCoord
-};
-
-struct CMFFormat
-{
-	struct Material
-	{
-		struct Texture
-		{
-			uint32_t TextureType;
-
-			uint32_t RelativeFilepathSize;
-			char* RelativeFilepath;
-		};
-
-		uint32_t NameSize;
-		char* Name;
-
-		uint32_t ID;
-
-		// Constants / Factors
-		float AmbientColour[3];
-		float DiffuseColour[3];
-		float MetallicFactor;
-		float RoughnessFactor;
-
-		// Textures
-		uint32_t TextureCount;
-		CMFFormat::Material::Texture* Textures;
-	};
-
-	struct VertexAttrib
-	{
-		uint32_t NameSize;
-		char* Name;
-		uint32_t ShaderDataType;
-		uint32_t VertexAttribType;
-
-		uint32_t BufferSize;
-		void* Buffer;
-	};
-
-	struct Mesh
-	{
-		uint32_t NameSize;
-		char* Name;
-
-		uint32_t MaterialID;
-
-		uint32_t VertexAttribCount;
-		CMFFormat::VertexAttrib* VertexAttribs;
-
-		uint32_t IndexBufferSize;
-		uint32_t* IndexBuffer;
-	};
-
-	const uint32_t HeaderSize = 15;
-	const char* Header = "CMFFormatStart";
-
-	uint32_t NameSize;
-	char* Name;
-
-	uint32_t MaterialCount;
-	CMFFormat::Material* Materials;
-
-	uint32_t MeshCount;
-	CMFFormat::Mesh* Meshes;
-
-	const uint32_t FooterSize = 13;
-	const char* Footer = "CMFFormatEnd";
-};
-
-struct TangentVectors
-{
-	float Tangent[3];
-	float Bitangent[3];
-};
+#define DEBUG_WITHOUT_INPUT 1
 
 void LoadWavefrontObject(std::string& filePath);
 void WriteToFile(CMFFormat* format);
@@ -114,7 +20,6 @@ TangentVectors CalculateTangentVectors(
 	glm::vec2 duv1,
 	glm::vec2 duv2
 	);
-
 int main(int argc, char* argv[])
 {
 
@@ -129,7 +34,7 @@ int main(int argc, char* argv[])
 #endif
 
 #if DEBUG_WITHOUT_INPUT
-	std::string filePath = "../../Sandbox/assets/models/plane/plane.obj";
+	std::string filePath = "../../Sandbox/assets/models/cube/cube.gltf";
 #else
 	std::string filePath = std::string(argv[1]);
 #endif
@@ -139,10 +44,10 @@ int main(int argc, char* argv[])
 
 	if (!fileExt.compare(".obj"))
 		LoadWavefrontObject(filePath);
-	//else if (!fileExt.compare(".glb"))
-	//	LoadBinaryGltfObject(filePath);
-	//else if (!fileExt.compare(".gltf"))
-	//	LoadASCIIGltfObject(filePath);
+	// else if (!fileExt.compare(".glb"))
+		// LoadBinaryGltfObject(filePath);
+	else if (!fileExt.compare(".gltf"))
+		LoadASCIIGLTF(filePath);
 	else
 	{
 		std::cout << "ERROR: File extension not supported!" << std::endl;
@@ -161,9 +66,12 @@ void LoadWavefrontObject(std::string& filePath)
 
 	int slashPos = filePath.find_last_of("/\\");
 	std::string mtlBaseDir = filePath.substr(0, slashPos == std::string::npos ? 0 : slashPos);
-	std::string fileName = filePath.substr(filePath.find_last_of("/\\") + 1, filePath.find_last_of(".") - (filePath.find_last_of("/\\")) - 1);
+	std::string fileName = filePath.substr(filePath.find_last_of("/\\") + 1,
+										   filePath.find_last_of(".") -
+										   (filePath.find_last_of("/\\")) - 1);
 
-	bool success = tinyobj::LoadObj(&attrib, &shapes, &tinyobjmaterials, &warn, &err, filePath.c_str(), mtlBaseDir.c_str());
+	bool success = tinyobj::LoadObj(&attrib, &shapes, &tinyobjmaterials,
+									&warn, &err, filePath.c_str(), mtlBaseDir.c_str());
 
 	if (!warn.empty())
 	{
@@ -608,21 +516,6 @@ TangentVectors CalculateTangentVectors(
 	result.Bitangent[0] = B.x;
 	result.Bitangent[1] = B.y;
 	result.Bitangent[2] = B.z;
-
-	// duv1[0] = du1 / duv1mag;
-	// duv1[1] = dv1 / duv1mag;	
-	// duv2[0] = du2 / duv2mag;
-	// duv2[1] = dv2 / duv2mag;
-
-	// float discr = 1 / ((duv1[0] * duv2[1]) - (duv2[0] * duv1[1]));
-
-	// result.Tangent[0] = discr * ((e1[0] * duv2[1]) + (e2[0] * -duv1[1]));
-	// result.Tangent[1] = discr * ((e1[1] * duv2[1]) + (e2[1] * -duv1[1]));
-	// result.Tangent[2] = discr * ((e1[2] * duv2[1]) + (e2[2] * -duv1[1]));
-
-	// result.Bitangent[0] = discr * ((e1[0] * -duv2[0]) + (e2[0] * duv1[0]));
-	// result.Bitangent[1] = discr * ((e1[1] * -duv2[0]) + (e2[1] * duv1[0]));
-	// result.Bitangent[2] = discr * ((e1[2] * -duv2[0]) + (e2[2] * duv1[0]));
 	
 	float test = glm::dot(T, B);
 	

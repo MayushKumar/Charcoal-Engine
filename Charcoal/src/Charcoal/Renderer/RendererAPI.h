@@ -26,6 +26,7 @@ namespace Charcoal
 		virtual void Init() = 0;
 		virtual void SetClearColour(const glm::vec4& colour) = 0;
 		virtual void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;
+		virtual void SetBlending(bool value) = 0;
 		virtual void SetPolygonMode(PolygonMode mode) = 0;
 		virtual void ClearColourBuffer() = 0;
 		virtual void ClearDepthBuffer() = 0;

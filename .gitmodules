@@ -13,3 +13,9 @@
 [submodule "tools/CMFCompiler/vendor/tinyobjloader"]
 	path = tools/CMFCompiler/vendor/tinyobjloader
 	url = https://github.com/tinyobjloader/tinyobjloader.git
+[submodule "tools/CMFCompiler/vendor/tinygltf"]
+	path = tools/CMFCompiler/vendor/tinygltf
+	url = git@github.com:syoyo/tinygltf.git
+[submodule "tinygltf"]
+	path = tools/CMFCompiler/vendor/tinygltf
+	url = git@github.com:syoyo/tinygltf.git

@@ -13,7 +13,7 @@
 #ifdef _MSC_VER
 #define CH_CORE_ASSERT(x, ...) if (!(x)) { CH_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); }
 #define CH_ASSERT(x, ...) if (!(x)) { CH_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak(); }
-#elif defined __GNUC__ && CH_PLATFORM_LINUX
+#elif defined CH_PLATFORM_LINUX
 #include <signal.h>
 #define CH_CORE_ASSERT(x, ...) if (!(x)) { CH_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); raise(SIGTRAP); }
 #define CH_ASSERT(x, ...) if (!(x)) { CH_ERROR("Assertion failed: {0}", __VA_ARGS__); raise(SIGTRAP); }
@@ -40,6 +40,7 @@ namespace Charcoal
 
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
+
 	template<typename T, typename ... Args>
 	constexpr Ref<T> CreateRef(Args&& ... args)
 	{

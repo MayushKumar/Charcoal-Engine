@@ -27,6 +27,7 @@ namespace Charcoal {
 		void PushOverlay(Layer* overlay);
 
 		inline Window& GetWindow() { return *m_Window; }
+		void SetImGuiBlockEvents(bool enabled) { m_ImGuiBlockEvents = enabled; }
 
 		static inline Application& GetApplication() { return *s_Instance; }
 
@@ -42,6 +43,7 @@ namespace Charcoal {
 
 		bool m_Running;
 		bool m_Minimized;
+		bool m_ImGuiBlockEvents = true;
 		LayerStack m_LayerStack;
 
 		float m_LastFrameTime = 0.0f;

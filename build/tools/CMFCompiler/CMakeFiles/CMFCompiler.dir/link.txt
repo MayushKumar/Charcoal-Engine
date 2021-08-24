@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG -Wl,--no-as-needed -ldl CMakeFiles/CMFCompiler.dir/src/main.cpp.o CMakeFiles/CMFCompiler.dir/vendor/tinyobjloader/tiny_obj_loader.cc.o -o CMFCompiler 

@@ -29,6 +29,11 @@ namespace Charcoal
 			s_RendererAPI->SetViewport(x, y, width, height);
 		}
 
+		inline static void SetBlending(bool value)
+		{
+			s_RendererAPI->SetBlending(value);
+		}
+
 		inline static void SetPolygonMode(PolygonMode mode)
 		{
 			s_RendererAPI->SetPolygonMode(mode);

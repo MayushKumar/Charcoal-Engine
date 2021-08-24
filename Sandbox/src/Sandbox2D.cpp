@@ -15,11 +15,11 @@ void Sandbox2D::OnAttach()
 	m_SquareVA = Charcoal::VertexArray::Create();
 	m_SquareVA->Bind();
 
-	Charcoal::BufferLayout layout =
-	{
+	Charcoal::BufferLayout layout = {
 		{Charcoal::ShaderDataType::Float3, "a_Position"},
 		{Charcoal::ShaderDataType::Float2, "a_TexCoord"}
 	};
+	  
 	squareVB = Charcoal::VertexBuffer::Create(sizeof(squareVertices), squareVertices);
 	squareVB->SetLayout(layout);
 
@@ -28,9 +28,8 @@ void Sandbox2D::OnAttach()
 	m_SquareVA->AddVertexBuffer(squareVB);
 	m_SquareVA->SetIndexBuffer(squareIB);
 
-	m_LogoTexture = Charcoal::Texture2D::Create("assets/textures/logo.png");
-	m_BackgroundTexture = Charcoal::Texture2D::Create("assets/textures/background.png");
-
+	// m_LogoTexture = Charcoal::Texture2D::Create("assets/textures/logo.png", Charcoal::TextureFormat::RGBA, Charcoal::TextureInternalFormat::RGBA, Charcoal::TextureDataType::UByte);
+	// m_BackgroundTexture = Charcoal::Texture2D::Create("assets/textures/background.png", Charcoal::TextureFormat::RGBA, Charcoal::TextureInternalFormat::RGBA, Charcoal::TextureDataType::UByte);
 
 	Charcoal::Application::GetApplication().GetWindow().SetVSync(false);
 }

@@ -55,6 +55,7 @@ namespace Charcoal
 		glBindVertexArray(0);
 	}
 
+	// Call only if the VertexArray is bound.
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer> buffer, uint32_t attribOffset)
 	{
 		CH_PROFILE_FUNCTION();
@@ -75,6 +76,7 @@ namespace Charcoal
 		m_VertexBuffers.push_back(buffer);
 	}
 
+	// Call only if the VertexArray is bound.
 	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer> buffer)
 	{
 		CH_PROFILE_FUNCTION();

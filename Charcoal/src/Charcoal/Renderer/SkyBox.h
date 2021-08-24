@@ -2,6 +2,8 @@
 
 #include "Charcoal/Core/Core.h"
 #include "Charcoal/Renderer/Texture.h"
+#include "Charcoal/Renderer/VertexArray.h"
+#include "Charcoal/Renderer/Framebuffer.h"
 
 namespace Charcoal
 {
@@ -9,13 +11,20 @@ namespace Charcoal
 	class SkyBox
 	{
 	public:
-		SkyBox(const std::string& cubeMapPath);
+		SkyBox(const std::string& equiMapPath);
 		~SkyBox();
 
-		inline Ref<CubeMap> GetCubeMap() const { return m_CubeMap; }
+	public:
+		Ref<CubeMap> m_CubeMap;
+		Ref<CubeMap> m_IrradianceMap;
+		Ref<CubeMap> m_RadianceMap;
+		float m_LuminanceFactor = 1.0f;
+
+		static Ref<Texture2D> s_SpecularLUT;
 		
 	private:
-		Ref<CubeMap> m_CubeMap;
+		void GenerateIrradianceMap();
+		void PrefilterRadianceMap();
 	};
 	
 }

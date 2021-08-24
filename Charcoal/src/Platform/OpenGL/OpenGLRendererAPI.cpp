@@ -12,6 +12,12 @@ namespace Charcoal
 	{
 		CH_PROFILE_FUNCTION();
 
+		glEnable(GL_CULL_FACE);
+		glFrontFace(GL_CCW);
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
@@ -28,6 +34,14 @@ namespace Charcoal
 		CH_PROFILE_FUNCTION();
 
 		glViewport(x, y, width, height);
+	}
+
+	void OpenGLRendererAPI::SetBlending(bool value)
+	{
+		if (value)
+			glEnable(GL_BLEND);
+		else
+			glDisable(GL_BLEND);
 	}
 
 	void OpenGLRendererAPI::SetPolygonMode(PolygonMode mode)

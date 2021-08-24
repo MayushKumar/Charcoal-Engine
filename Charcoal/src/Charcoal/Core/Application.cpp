@@ -2,6 +2,7 @@
 
 #include "Charcoal/Core/Application.h"
 
+#include "Charcoal/Core/Log.h"
 #include "Charcoal/Debug/Instrumentor.h"
 
 #include "Charcoal/Input/Input.h"
@@ -29,6 +30,7 @@ namespace Charcoal {
 		m_Window->SetEventCallback(CH_BIND_EVENT_FUNC(Application::OnEvent));
 
 		RendererCommand::Init();
+
 		Renderer3D::Init();
 		Renderer2D::Init();
 
@@ -97,8 +99,8 @@ namespace Charcoal {
 		
 		if (!m_Minimized)
 		{
-			if(((event.GetCategoryFlags() | EventCategory::MouseInputEvent) && imguiIO.WantCaptureMouse) ||
-			   ((event.GetCategoryFlags() | EventCategory::KeyInputEvent) && imguiIO.WantCaptureKeyboard)) return;
+			if((((event.GetCategoryFlags() | EventCategory::MouseInputEvent) && imguiIO.WantCaptureMouse) ||
+				((event.GetCategoryFlags() | EventCategory::KeyInputEvent) && imguiIO.WantCaptureKeyboard)) && m_ImGuiBlockEvents) return;
 		
 			for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 			{
@@ -118,6 +120,7 @@ namespace Charcoal {
 		}
 		m_Minimized = false;
 		RendererCommand::SetViewport(0, 0, e.GetWidth(), e.GetHeight());
+		FramebufferStack::UpdateDefaultSwapchainFramebufferSize(e.GetWidth(), e.GetHeight());
 		return false;
 	}
 

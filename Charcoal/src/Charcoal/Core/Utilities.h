@@ -1,13 +1,13 @@
 #pragma once
 
 #include "string.h"
-#include "stb_image.h"
 
 namespace Charcoal
 {
 
 	class FileUtils
 	{
+
 	public:
 		static std::vector<char> ReadFileBinary(const std::string& path);
 	};
@@ -15,15 +15,18 @@ namespace Charcoal
 	class ImageUtils
 	{
 	public:
-		
+
 		struct STB_Image
 		{
 			uint32_t Width, Height;
 			uint32_t Channels;
-			stbi_uc* Data;
+			void* Data;
 		};
 		
-		static STB_Image LoadImage(const std::string& path, bool flipVertical, uint32_t requiredChannels = 0);
+		static STB_Image LoadImage(const char* path, bool flipVertically, uint32_t requiredChannels = 0);
+		static void FreeImageData(STB_Image& image);
+
+		static void WritePNGImage(const char* path, bool flipVertically, STB_Image image);
 		
 	};
 	

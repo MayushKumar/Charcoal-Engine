@@ -25,6 +25,8 @@ namespace Charcoal
 		inline float GetFOV() const { return m_FOV; }
 
 		inline const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+		inline const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
+		inline const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 
 	private:
 		glm::mat4 m_ViewMatrix, m_ProjectionMatrix, m_ViewProjectionMatrix;

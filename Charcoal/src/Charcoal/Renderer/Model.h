@@ -83,13 +83,8 @@ namespace Charcoal
 	class Model
 	{
 	public:
-		Model(const char* filePath);
+		// Model() {};
 		void SetTransform(glm::mat4 transform);
-
-	private:
-		void LoadModel(const char* filePath);
-		Ref<PBRMaterial> LoadPBRMaterial(std::ifstream& fileStream, const std::string& directoryPath);
-		void GenerateVertexArray();
 
 	public:
 		std::string m_Name;
@@ -101,6 +96,19 @@ namespace Charcoal
 
 		glm::mat4 m_Transform = glm::mat4(1.0f);
 		glm::mat3 m_NormalMatrix = glm::mat4(1.0f);
+	};
+
+	class ModelManager
+	{
+	public:
+		static Ref<Model> LoadModel(const char* filepath);
+
+	private:
+		static Ref<PBRMaterial> LoadPBRMaterial(std::ifstream& fileStream, const std::string& directoryPath);
+		static void GenerateVertexArray(Ref<Model>);
+
+	private:
+		static std::vector<Ref<Model>> m_Models;
 	};
 
 }

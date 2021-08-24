@@ -26,6 +26,16 @@ namespace Charcoal
 
 	class Renderer3D
 	{
+
+	struct Storage
+	{
+		Ref<Framebuffer> HDRFramebuffer;
+		Ref<VertexArray> TonemappingQuadVAO;
+		Ref<Shader> TonemappingShader;
+
+		Ref<Shader> SkyBoxShader;
+	};
+
 	public:
 		static void Init();
 		static void ShutDown();
@@ -40,8 +50,8 @@ namespace Charcoal
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
 	private:
-
 		static Ref<Scene3D> m_Scene;
+		static Storage* m_Storage;
 	};
 
 }

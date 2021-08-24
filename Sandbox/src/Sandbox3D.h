@@ -6,7 +6,7 @@ class Sandbox3D : public Charcoal::Layer
 {
 
 public:
-	Sandbox3D() : Layer("Example Layer"), m_CameraController(1280.0f / 720.0f, 45.0f, 0.01f, 1000.0f, true)
+	Sandbox3D() : Layer("Example Layer"), m_CameraController(1280.0f / 720.0f, 70.0f, 0.1f, 100.0f, true)
 	{
 	}
 

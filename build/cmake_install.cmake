@@ -1,4 +1,4 @@
-# Install script for directory: /media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine
+# Install script for directory: /run/media/Storage/Personal/Dev/C++/Charcoal Engine
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -29,7 +29,7 @@ endif()
 
 # Install shared libraries without execute permission?
 if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
-  set(CMAKE_INSTALL_SO_NO_EXE "1")
+  set(CMAKE_INSTALL_SO_NO_EXE "0")
 endif()
 
 # Is this installation the result of a crosscompile?
@@ -44,37 +44,37 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/cmake_install.cmake")
+  include("/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/Sandbox/cmake_install.cmake")
+  include("/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/Sandbox/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/tools/CharcoalEditor/cmake_install.cmake")
+  include("/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/tools/CharcoalEditor/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/tools/CMFCompiler/cmake_install.cmake")
+  include("/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/tools/CMFCompiler/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/vendor/Glad/cmake_install.cmake")
+  include("/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/vendor/Glad/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/vendor/GLFW/cmake_install.cmake")
+  include("/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/vendor/GLFW/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/vendor/ImGui/cmake_install.cmake")
+  include("/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/Charcoal/vendor/ImGui/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -85,5 +85,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/media/mayushkumar/Storage/Personal/Dev/C++/Charcoal Engine/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/run/media/Storage/Personal/Dev/C++/Charcoal Engine/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

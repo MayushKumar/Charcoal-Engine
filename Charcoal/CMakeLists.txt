@@ -6,11 +6,9 @@ file(GLOB_RECURSE SrcFiles
   "src/Charcoal/*.cpp"
   "src/Platform/OpenGL/*.h"
   "src/Platform/OpenGL/*.cpp"
-  )
 
-list(APPEND SrcFiles
-  "vendor/stb_image/stb_image.h"
-  "vendor/stb_image/stb_image.cpp"
+  "vendor/stb/*.h"
+  "vendor/stb/*.cpp"
   )
 
 if (WIN32)
@@ -32,7 +30,7 @@ GetIncludeDir("GLFW" GLFW_dir)
 GetIncludeDir("Glad" Glad_dir)
 GetIncludeDir("ImGui" ImGui_dir)
 GetIncludeDir("GLM" GLM_dir)
-GetIncludeDir("stb_image" stb_image_dir)
+GetIncludeDir("stb" stb_dir)
 
 target_include_directories(Charcoal PUBLIC
   "src"
@@ -40,7 +38,7 @@ target_include_directories(Charcoal PUBLIC
   "../${Glad_dir}"
   "../${ImGui_dir}"
   "../${GLM_dir}"
-  "../${stb_image_dir}"
+  "../${stb_dir}"
   "vendor/spdlog/include"
   )
 
@@ -54,9 +52,9 @@ add_definitions(
 
 set_target_properties(Charcoal PROPERTIES LINKER_LANGUAGE CXX)
 
-# target_precompile_headers(Charcoal PRIVATE
-#   [["chpch.h"]]
-#   )
+target_precompile_headers(Charcoal PRIVATE
+  [["chpch.h"]]
+  )
 
 if (WIN32)
   #TODO: Make sure that the latest SDK is used.

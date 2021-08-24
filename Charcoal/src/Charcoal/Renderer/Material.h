@@ -6,10 +6,6 @@
 namespace Charcoal
 {
 
-	enum class TextureType
-	{
-		None = 0, Albedo, Normal, Metallic, Roughness
-	};
 
 	class Material
 	{
@@ -17,6 +13,10 @@ namespace Charcoal
 		Material() {}
 		
 	public:
+		enum class TextureType
+		{
+			None = 0, Albedo, Normal, Metallic, Roughness
+		};
 		virtual ~Material() {}
 		
 		virtual void Bind() const = 0;

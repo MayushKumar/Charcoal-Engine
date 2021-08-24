@@ -1,38 +1,38 @@
 #include "Sandbox3D.h"
+#include "Charcoal/Renderer/Renderer3D.h"
+#include "imgui.h"
 
 void Sandbox3D::OnAttach()
 {
 	CH_PROFILE_FUNCTION();
 	m_CameraController.SetEnabled(false);
-	// m_ShaderLibrary.Add("PBR", Charcoal::ShaderManager::LoadShader("assets/shaders/SPIR-V/PBR/PBR.spr", Charcoal::ShaderLanguage::SPIRV));
-	// m_ShaderLibrary.Add("PBR", Charcoal::ShaderManager::LoadShader("assets/shaders/PBR.glsl", Charcoal::ShaderLanguage::GLSL));
 	Charcoal::ShaderManager::LoadShader("assets/shaders/PBR.glsl", Charcoal::ShaderLanguage::GLSL);
-	// m_Model = Charcoal::CreateRef<Charcoal::Model>("assets/models/cube/cube.cmf");
-	// m_Model = Charcoal::CreateRef<Charcoal::Model>("assets/models/ico_sphere/ico_sphere.cmf");
-	m_Models.push_back(Charcoal::CreateRef<Charcoal::Model>("assets/models/sphere/Sphere.cmf"));
-	m_Models.push_back(Charcoal::CreateRef<Charcoal::Model>("assets/models/cerberus/Cerberus.cmf"));
-	// m_Models.push_back(Charcoal::CreateRef<Charcoal::Model>("assets/models/ukulele/Ukulele.cmf"));
-	// m_Model = Charcoal::CreateRef<Charcoal::Model>("assets/models/monkey/monkey.cmf");
-	// m_Model = Charcoal::CreateRef<Charcoal::Model>("assets/models/plane/plane.cmf");
+
+	m_Models.push_back(Charcoal::ModelManager::LoadModel("assets/models/cerberus/Cerberus.cmf"));
+	m_Models.push_back(Charcoal::ModelManager::LoadModel("assets/models/sphere/Sphere.cmf"));
 
 	m_Scene = Charcoal::CreateRef<Charcoal::Scene3D>();
 	
-	m_Scene->SetSkyBox(Charcoal::CreateRef<Charcoal::SkyBox>("assets/textures/cubemaps/cannon/"));
-	
+	// m_Scene->SetSkyBox(Charcoal::CreateRef<Charcoal::SkyBox>("assets/textures/environments/chinese_garden_4k.hdr"));
+	m_Scene->SetSkyBox(Charcoal::CreateRef<Charcoal::SkyBox>("assets/textures/environments/oberer_kuhberg_4k.hdr"));
+	// m_Scene->SetSkyBox(Charcoal::CreateRef<Charcoal::SkyBox>("assets/textures/environments/vignaioli_night_4k.hdr"));
+
 	m_LightPos = {0.0f, 0.0f, 3.0f};
 	m_LightStrength = 20.0f;
 	m_Scene->m_PointLights.emplace_back(m_LightPos, glm::vec3(1.0f, 1.0f, 1.0f), m_LightStrength);
+
 	// m_Scene->m_PointLights.emplace_back(glm::vec3(-0.3f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 10);
 }
 
 void Sandbox3D::OnUpdate(Charcoal::Timestep timestep)
 {
 	{
-		CH_PROFILE_SCOPE("Camera Update");
-
+	CH_PROFILE_SCOPE("Camera Update");
+	
 		if (m_IsCameraEnabled)
 			m_CameraController.OnUpdate(timestep);
 	}
+
 	m_Scene->m_Camera = m_CameraController.GetCamera();
 	
 	if (Charcoal::Input::IsKeyPressed(CH_KEY_B))
@@ -84,8 +84,9 @@ bool Sandbox3D::OnKeyReleased(Charcoal::KeyReleasedEvent &e)
 		m_CameraController.SetEnabled(m_IsCameraEnabled);
 	}
 	if (e.GetKeyCode() == CH_KEY_R)
-		// m_ShaderLibrary.Get("PBR")->ReadAndCompile();
 		Charcoal::ShaderManager::GetShader("PBR")->ReadAndCompile();
+	if (e.GetKeyCode() == CH_KEY_C)
+		Charcoal::ShaderManager::GetShader("IrradianceConvolution")->ReadAndCompile();
 	if (e.GetKeyCode() == CH_KEY_O)
 		m_IsModelRotating = !m_IsModelRotating;
 	return true;

@@ -7,6 +7,11 @@
 namespace Charcoal
 {
 
+	#define OPENGL_BREAK_ON_TRACE 0
+	#define OPENGL_BREAK_ON_INFO 0
+	#define OPENGL_BREAK_ON_WARN 0
+	#define OPENGL_BREAK_ON_ERROR 0
+
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
 	{
 		CH_CORE_ASSERT(m_WindowHandle, "Window Handle is null!");
@@ -21,25 +26,33 @@ namespace Charcoal
 		CH_CORE_ASSERT(status, "Failed to initialize Glad");
 		CH_CORE_INFO("Graphics Vendor: {0}\n\t\t\tRenderer: {1}\n\t\t\tOpenGL Version: {2}\n\t\t\tGLSL Version: {3}", glGetString(GL_VENDOR), glGetString(GL_RENDERER), glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-		glFrontFace(GL_CCW);
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
-		
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback((GLDEBUGPROC)[](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam) {
 			switch(severity)
 			{
 				case GL_DEBUG_SEVERITY_NOTIFICATION:
 					CH_CORE_TRACE("OpenGL Debug Message {0}", message);
+					#if OPENGL_BREAK_ON_TRACE
+					CH_CORE_ASSERT(false, "OpenGL Break On Trace")
+					#endif
 					break;
 				case GL_DEBUG_SEVERITY_LOW:
 					CH_CORE_INFO("OpenGL Debug Message {0}", message);
+					#if OPENGL_BREAK_ON_INFO
+					CH_CORE_ASSERT(false, "OpenGL Break On Info")
+					#endif
 					break;
 				case GL_DEBUG_SEVERITY_MEDIUM:
 					CH_CORE_WARN("OpenGL Debug Message {0}", message);
+					#if OPENGL_BREAK_ON_WARN
+					CH_CORE_ASSERT(false, "OpenGL Break On Warn")
+					#endif
 					break;
 				case GL_DEBUG_SEVERITY_HIGH:
 					CH_CORE_ERROR("OpenGL Debug Message {0}", message);
+					#if OPENGL_BREAK_ON_ERROR
+					CH_CORE_ASSERT(false, "OpenGL Break On Error")
+					#endif
 					break;
 			}
 			}, nullptr);
