@@ -1,4 +1,4 @@
-#+title: Charcaol-Engine
+#+title: Charcoal-Engine
 
 * About
 A simple personal project to get started with game engine development. This started off by following Yan Chernikov's ([[https://github.com/TheCherno][The Cherno]]) Game Engine Series.
