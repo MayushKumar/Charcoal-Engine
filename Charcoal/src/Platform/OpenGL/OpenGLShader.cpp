@@ -54,7 +54,13 @@ namespace Charcoal
 		CH_PROFILE_FUNCTION();
 		CH_CORE_ASSERT(!m_Filepath.empty(), "ReadAndCompile cannot be called on a Shader with no asssociated filepath");
 
-		m_CompilationSuccess = true;
+		size_t slash = m_Filepath.find_last_of("/\\");
+		slash = slash == std::string::npos ? 0 : slash;
+		size_t dot = m_Filepath.rfind('.');
+		dot = dot == std::string::npos ? m_Filepath.length() : dot;
+		m_Name = m_Filepath.substr(slash + 1, dot - slash - 1);
+
+		CH_CORE_TRACE("Compiling shader: " + m_Name);
 
 		m_LocationCache.clear();
 		if (m_RendererID != -1)
@@ -81,11 +87,7 @@ namespace Charcoal
 		}
 		}
 
-		size_t slash = m_Filepath.find_last_of("/\\");
-		slash = slash == std::string::npos ? 0 : slash;
-		size_t dot = m_Filepath.rfind('.');
-		dot = dot == std::string::npos ? m_Filepath.length() : dot;
-		m_Name = m_Filepath.substr(slash + 1, dot - slash - 1);
+		m_CompilationSuccess = true;
 	}
 
 	void OpenGLShader::CompileGLSLShaderSources(const std::unordered_map<GLenum, std::string>& shaders)

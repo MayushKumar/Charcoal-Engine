@@ -11,6 +11,32 @@ file(GLOB_RECURSE SrcFiles
   "vendor/stb/*.cpp"
   )
 
+set(SRC
+  "src/Charcoal/Core/Application.cpp"
+  "src/Charcoal/Core/Log.cpp"
+  "src/Charcoal/Core/Utilities.cpp"
+
+  "src/Charcoal/ImGui/ImGuiBuild.cpp"
+  "src/Charcoal/ImGui/ImGuiLayer.cpp"
+  "src/Charcoal/Layers/LayerStack.cpp"
+
+  "src/Charcoal/Renderer/Buffer.cpp"
+  "src/Charcoal/Renderer/Framebuffer.cpp"
+  "src/Charcoal/Renderer/Material.cpp"
+  "src/Charcoal/Renderer/Model.cpp"
+  "src/Charcoal/Renderer/OrthographicCamera.cpp"
+  "src/Charcoal/Renderer/PerspectiveCamera.cpp"
+  "src/Charcoal/Renderer/Renderer2D.cpp"
+  "src/Charcoal/Renderer/Renderer3D.cpp"
+  "src/Charcoal/Renderer/RendererAPI.cpp"
+  "src/Charcoal/Renderer/RendererCommand.cpp"
+  "src/Charcoal/Renderer/ShaderManager.cpp"
+  "src/Charcoal/Renderer/SkyBox.cpp"
+  "src/Charcoal/Renderer/Texture.cpp"
+  "src/Charcoal/Renderer/TextureUtilities.cpp"
+  "src/Charcoal/Renderer/VertexArray.cpp"
+  )
+
 if (WIN32)
   file(GLOB_RECURSE WindowsSrcFiles "src/Platform/Windows/*.h" "src/PLatform/Windows/*.cpp")
   list(APPEND SrcFiles ${WindowsSrcFiles})

@@ -25,14 +25,14 @@ namespace Charcoal
 	class OpenGLIndexBuffer : public IndexBuffer
 	{
 	public:
-		OpenGLIndexBuffer(uint32_t size, uint32_t* indices);
+		OpenGLIndexBuffer(uint32_t size, void* indices);
 		virtual ~OpenGLIndexBuffer();
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
-		inline virtual uint32_t GetCount() const override { return m_Size / sizeof(uint32_t); }
+		// inline virtual uint32_t GetCount() const override { return m_Size / sizeof(uint32_t); }
 
 	private:
-		uint32_t m_RendererID, m_Size;
+		uint32_t m_RendererID;
 	};
 }

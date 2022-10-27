@@ -3,8 +3,11 @@
 
 #include <glad/glad.h>
 
+#include "Charcoal/Core/Enums.h"
+
 namespace Charcoal
 {
+
 	// Vertex Buffer
 	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size) : m_RendererID()
 	{
@@ -57,7 +60,7 @@ namespace Charcoal
 	}
 
 	// Index Buffer
-	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t size, uint32_t* indices) : m_Size(size)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t size, void* indices)
 	{
 		CH_PROFILE_FUNCTION();
 

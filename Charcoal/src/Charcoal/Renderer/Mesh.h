@@ -30,7 +30,7 @@ namespace Charcoal
 		uint32_t m_MaterialIndex;
 
 		std::vector<VertexAttrib> m_VertexAttribs;
-		std::vector<uint32_t> m_IndexBufferData;
+		std::vector<uint16_t> m_IndexBufferData;
 	};
 
 }

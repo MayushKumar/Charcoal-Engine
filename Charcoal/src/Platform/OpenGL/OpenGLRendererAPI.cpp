@@ -1,6 +1,7 @@
 #include <chpch.h>
 #include "OpenGLRendererAPI.h"
 
+#include "OpenGLUtil.h"
 #include "Charcoal/Renderer/RendererCommand.h"
 
 #include <glad/glad.h>
@@ -78,7 +79,8 @@ namespace Charcoal
 	{
 		CH_PROFILE_FUNCTION();
 
-		glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, indicesCount,
+					   DataTypeToOpenGLDataType(vertexArray->GetIndexBuffer()->m_DataType), nullptr);
 	}
 
 }

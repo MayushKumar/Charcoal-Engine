@@ -15,7 +15,7 @@ namespace Charcoal
 	public:
 		enum class TextureType
 		{
-			None = 0, Albedo, Normal, Metallic, Roughness
+			None = 0, Albedo, Normal, Metallic, Roughness, Metallic_Roughness
 		};
 		virtual ~Material() {}
 		
@@ -38,11 +38,13 @@ namespace Charcoal
 		
 		Ref<Texture2D> m_AlbedoMap;
 		Ref<Texture2D> m_NormalMap;
-		Ref<Texture2D> m_MetallicMap;
-		Ref<Texture2D> m_RoughnessMap;
+		// Ref<Texture2D> m_MetallicMap;
+		// Ref<Texture2D> m_RoughnessMap;
+		Ref<Texture2D> m_MetallicRoughnessMap;
 
-		float m_AmbientColour[3];
-		float m_DiffuseColour[3];
+		// float m_AmbientColour[3];
+		// float m_DiffuseColour[3];
+		float m_BaseColour[4];
 		float m_MetallicFactor;
 		float m_RoughnessFactor;
 	};

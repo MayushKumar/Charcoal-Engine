@@ -29,8 +29,9 @@ namespace Charcoal
 			uint32_t ID;
 
 			// Constants / Factors
-			float AmbientColour[3];
-			float DiffuseColour[3];
+			// float AmbientColour[3];
+			// float DiffuseColour[3];
+			float BaseColour[4];
 			float MetallicFactor;
 			float RoughnessFactor;
 

@@ -1,7 +1,7 @@
 {
     "configurations": [
 		{
-            "type": "codelldb",
+            "type": "lldb",
             "request": "launch",
             "name": "Debug Sandbox",
             "program": "${workspaceFolder}/build/Sandbox/Debug/Sandbox",
@@ -10,7 +10,7 @@
         },
 
         {
-            "type": "codelldb",
+            "type": "lldb",
             "request": "launch",
             "name": "Debug CharcoalEditor",
             "program": "${workspaceFolder}/build/tools/CharcoalEditor/Debug/CharcoalEditor",
@@ -19,7 +19,7 @@
         },
 		
 		{
-            "type": "codelldb",
+            "type": "lldb",
             "request": "launch",
             "name": "Debug CMFCompiler",
             "program": "${workspaceFolder}/build/tools/CMFCompiler/Debug/CMFCompiler",

@@ -30,8 +30,9 @@ namespace Charcoal
 		uint32_t ID = 0;
 		fileStream.read((char*)&ID, sizeof(CMFFormat::Material::ID));
 
-		fileStream.read((char*)material->m_AmbientColour, sizeof(CMFFormat::Material::AmbientColour));
-		fileStream.read((char*)material->m_DiffuseColour, sizeof(CMFFormat::Material::DiffuseColour));
+		// fileStream.read((char*)material->m_AmbientColour, sizeof(CMFFormat::Material::AmbientColour));
+		// fileStream.read((char*)material->m_DiffuseColour, sizeof(CMFFormat::Material::DiffuseColour));
+		fileStream.read((char*)material->m_BaseColour, sizeof(CMFFormat::Material::BaseColour));
 		fileStream.read((char*)&material->m_MetallicFactor, sizeof(CMFFormat::Material::MetallicFactor));
 		fileStream.read((char*)&material->m_RoughnessFactor, sizeof(CMFFormat::Material::RoughnessFactor));
 
@@ -59,11 +60,14 @@ namespace Charcoal
 			case Material::TextureType::Normal:
 				material->m_NormalMap = texture;
 				break;
-			case Material::TextureType::Metallic:
-				material->m_MetallicMap = texture;
-				break;
-			case Material::TextureType::Roughness:
-				material->m_RoughnessMap = texture;
+			// case Material::TextureType::Metallic:
+			// 	material->m_MetallicMap = texture;
+			// 	break;
+			// case Material::TextureType::Roughness:
+			// 	material->m_RoughnessMap = texture;
+			// 	break;
+			case Material::TextureType::Metallic_Roughness:
+				material->m_MetallicRoughnessMap = texture;
 				break;
 			case Material::TextureType::None:
 				CH_CORE_ERROR("Texture type not supported for {0}", directoryPath + relativeFilePath);
@@ -93,7 +97,7 @@ namespace Charcoal
 				model->m_VertexArrays[i]->AddVertexBuffer(vbo, j);
 			}
 
-			Ref<IndexBuffer> ibo = IndexBuffer::Create(model->m_Meshes[i]->m_IndexBufferData.size() * sizeof(uint32_t), model->m_Meshes[i]->m_IndexBufferData.data());
+			Ref<IndexBuffer> ibo = IndexBuffer::Create(DataType::UInt16, model->m_Meshes[i]->m_IndexBufferData.size() * DataTypeSize(DataType::UInt16), model->m_Meshes[i]->m_IndexBufferData.data());
 			model->m_VertexArrays[i]->SetIndexBuffer(ibo);
 		}
 	}
@@ -187,7 +191,8 @@ namespace Charcoal
 
 			uint32_t indexBufferSize = 0;
 			fileStream.read((char*)&indexBufferSize, sizeof(CMFFormat::Mesh::IndexBufferSize));
-			mesh->m_IndexBufferData.resize(indexBufferSize / sizeof(uint32_t));
+			// fileStream.read((char*)&indexBufferSize, sizeof(uint16_t));
+			mesh->m_IndexBufferData.resize(indexBufferSize / sizeof(uint16_t));
 
 			fileStream.read((char*)mesh->m_IndexBufferData.data(), indexBufferSize);
 

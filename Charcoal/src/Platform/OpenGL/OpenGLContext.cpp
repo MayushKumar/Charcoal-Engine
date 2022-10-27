@@ -12,6 +12,11 @@ namespace Charcoal
 	#define OPENGL_BREAK_ON_WARN 0
 	#define OPENGL_BREAK_ON_ERROR 0
 
+	#define OPENGL_LOG_TRACE 0
+	#define OPENGL_LOG_INFO 1
+	#define OPENGL_LOG_WARN 1
+	#define OPENGL_LOG_ERROR 1
+
 	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
 	{
 		CH_CORE_ASSERT(m_WindowHandle, "Window Handle is null!");
@@ -31,25 +36,33 @@ namespace Charcoal
 			switch(severity)
 			{
 				case GL_DEBUG_SEVERITY_NOTIFICATION:
+                    #if OPENGL_LOG_TRACE
 					CH_CORE_TRACE("OpenGL Debug Message {0}", message);
+					#endif
 					#if OPENGL_BREAK_ON_TRACE
 					CH_CORE_ASSERT(false, "OpenGL Break On Trace")
 					#endif
 					break;
 				case GL_DEBUG_SEVERITY_LOW:
+				    #if OPENGL_LOG_INFO
 					CH_CORE_INFO("OpenGL Debug Message {0}", message);
+					#endif
 					#if OPENGL_BREAK_ON_INFO
 					CH_CORE_ASSERT(false, "OpenGL Break On Info")
 					#endif
 					break;
 				case GL_DEBUG_SEVERITY_MEDIUM:
+				    #if OPENGL_LOG_TRACE
 					CH_CORE_WARN("OpenGL Debug Message {0}", message);
+					#endif
 					#if OPENGL_BREAK_ON_WARN
 					CH_CORE_ASSERT(false, "OpenGL Break On Warn")
 					#endif
 					break;
 				case GL_DEBUG_SEVERITY_HIGH:
+				    #if OPENGL_LOG_ERROR
 					CH_CORE_ERROR("OpenGL Debug Message {0}", message);
+					#endif
 					#if OPENGL_BREAK_ON_ERROR
 					CH_CORE_ASSERT(false, "OpenGL Break On Error")
 					#endif

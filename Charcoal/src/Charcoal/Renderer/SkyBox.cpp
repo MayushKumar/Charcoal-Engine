@@ -142,7 +142,7 @@ namespace Charcoal
 		Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices);
 		vertexBuffer->SetLayout(layout);
 		vertexArray->AddVertexBuffer(vertexBuffer);
-		Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices);
+		Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(DataType::UInt32, sizeof(indices), indices);
 		vertexArray->SetIndexBuffer(indexBuffer);
 
 		SkyBox::s_SpecularLUT = Texture2D::Create({TextureInternalFormat::RG,

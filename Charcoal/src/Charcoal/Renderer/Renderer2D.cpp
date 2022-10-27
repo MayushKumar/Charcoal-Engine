@@ -48,7 +48,7 @@ namespace Charcoal
 
             offset += 4;
         }
-        m_Storage->QuadIndexBuffer = IndexBuffer::Create(m_Storage->MaxIndices * sizeof(uint32_t), indexData);
+        m_Storage->QuadIndexBuffer = IndexBuffer::Create(DataType::UInt32, m_Storage->MaxIndices * sizeof(uint32_t), indexData);
         m_Storage->QuadVertexArray->SetIndexBuffer(m_Storage->QuadIndexBuffer);
 
         m_Storage->QuadVerticesBase = new Storage::QuadVertex[m_Storage->MaxVertices];

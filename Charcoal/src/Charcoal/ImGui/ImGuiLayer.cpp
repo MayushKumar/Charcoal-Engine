@@ -42,6 +42,9 @@ namespace Charcoal
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
 		//ImGui::StyleColorsClassic();
+
+		io.Fonts->AddFontFromFileTTF("assets/fonts/Roboto-Regular.ttf", 15);
+		// io.Fonts->AddFontFromFileTTF("assets/fonts/TamsynExt.ttf", 14);
 		
 		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 		ImGuiStyle& style = ImGui::GetStyle();

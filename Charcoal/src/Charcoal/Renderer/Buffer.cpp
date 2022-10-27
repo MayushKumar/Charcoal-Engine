@@ -30,15 +30,18 @@ namespace Charcoal
 		return nullptr;
 	}
 
-	Ref<IndexBuffer> IndexBuffer::Create(uint32_t size, uint32_t* indices)
+	Ref<IndexBuffer> IndexBuffer::Create(DataType dataType, uint32_t size, void* indices)
 	{
+		Ref<IndexBuffer> ref;
 		switch (RendererAPI::GetAPI())
 		{
 		case	RendererAPI::API::None:		CH_CORE_ASSERT(false, "RendererAPI::None not supported!") return nullptr;
-		case	RendererAPI::API::OpenGL:	return CreateRef<OpenGLIndexBuffer>(size, indices);
+		case	RendererAPI::API::OpenGL:	ref = CreateRef<OpenGLIndexBuffer>(size, indices); break;
+		default: CH_CORE_ASSERT(false, "Unkown Renderer API!"); return nullptr;
 		}
-		CH_CORE_ASSERT(false, "Unkown Renderer API!");
-		return nullptr;
+		ref->m_DataType = dataType;
+		ref->m_Size = size;
+		return ref;
 	}
 
 }

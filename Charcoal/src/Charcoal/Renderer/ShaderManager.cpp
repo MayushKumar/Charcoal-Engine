@@ -8,7 +8,7 @@
 namespace Charcoal
 {
 
-	std::unordered_map<std::string, Ref<Shader>> ShaderManager::m_Shaders;
+	std::map<std::string, Ref<Shader>> ShaderManager::shader_map;
 	
 	Ref<Shader> ShaderManager::LoadShader(std::string filepath, ShaderLanguage language)
 	{
@@ -18,7 +18,7 @@ namespace Charcoal
 		case RendererAPI::API::OpenGL:
 		{
 			Ref<Shader> shader = CreateRef<OpenGLShader>(filepath, language);
-			m_Shaders.insert(std::make_pair(shader->GetName(), shader));
+			shader_map.insert(std::make_pair(shader->GetName(), shader));
 			return shader;
 			break;
 		}
@@ -29,7 +29,7 @@ namespace Charcoal
 
 	Ref<Shader> ShaderManager::GetShader(std::string name)
 	{
-		return m_Shaders[name];
+		return shader_map[name];
 	}
 	
 }

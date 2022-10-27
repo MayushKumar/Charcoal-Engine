@@ -60,7 +60,7 @@ namespace Charcoal
 			Ref<VertexBuffer> vertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices);
 			vertexBuffer->Bind();
 			vertexBuffer->SetLayout(layout);
-			Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices);
+			Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(DataType::UInt32, sizeof(indices), indices);
 			indexBuffer->Bind();
 
 			m_Storage->TonemappingQuadVAO->AddVertexBuffer(vertexBuffer);
@@ -154,16 +154,12 @@ namespace Charcoal
 
 		material->m_AlbedoMap->Bind(0);
 		material->m_NormalMap->Bind(1);
-		material->m_MetallicMap->Bind(2);
-		material->m_RoughnessMap->Bind(3);
+		material->m_MetallicRoughnessMap->Bind(2);
 		shader->SetInt("material.AlbedoMap", 0);
 		shader->SetInt("material.NormalMap", 1);
-		shader->SetInt("material.MetallicMap", 2);
-		shader->SetInt("material.RoughnessMap", 3);
-		shader->SetVec3("material.AmbientColour", { material->m_AmbientColour[0],
-				material->m_AmbientColour[1], material->m_AmbientColour[2] });
-		shader->SetVec3("material.DiffuseColour", { material->m_DiffuseColour[0],
-				material->m_DiffuseColour[1], material->m_DiffuseColour[2] });
+		shader->SetInt("material.MetallicRoughnessMap", 2);
+		shader->SetVec4("material.BaseColour", { material->m_BaseColour[0],
+				material->m_BaseColour[1], material->m_BaseColour[2], material->m_BaseColour[3] });
 		shader->SetFloat("material.MetallicFactor", material->m_MetallicFactor);
 		shader->SetFloat("material.RoughnessFactor", material->m_RoughnessFactor);
 

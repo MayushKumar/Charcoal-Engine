@@ -23,7 +23,7 @@ void Sandbox2D::OnAttach()
 	squareVB = Charcoal::VertexBuffer::Create(sizeof(squareVertices), squareVertices);
 	squareVB->SetLayout(layout);
 
-	squareIB = Charcoal::IndexBuffer::Create(sizeof(squareIndices), squareIndices);
+	squareIB = Charcoal::IndexBuffer::Create(Charcoal::DataType::UInt32, sizeof(squareIndices), squareIndices);
 
 	m_SquareVA->AddVertexBuffer(squareVB);
 	m_SquareVA->SetIndexBuffer(squareIB);

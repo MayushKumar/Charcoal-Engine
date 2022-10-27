@@ -1,11 +1,11 @@
 #type vertex
 #version 450 core
 
-layout(location = 0) in vec3 a_Position;
-layout(location = 1) in vec3 a_Normal;
-layout(location = 2) in vec3 a_Tangent;
-layout(location = 3) in vec3 a_Bitangent;
-layout(location = 4) in vec2 a_TexCoord;
+layout(location = 0) in vec3 a_Normal;
+layout(location = 1) in vec3 a_Position;
+layout(location = 2) in vec2 a_TexCoord;
+layout(location = 3) in vec3 a_Tangent;
+layout(location = 4) in vec3 a_Bitangent;
 
 struct PointLight
 {
@@ -19,6 +19,9 @@ out VS_Out
 	vec3 v_FragPos;
 	vec2 v_TexCoord;
 	vec3 v_ViewPos;
+	vec3 normal;
+	vec3 tangent;
+	vec3 bitangent;
 	mat3 invTBNMatrix;
 	PointLight pointLights[2];
 } vs_out;
@@ -51,6 +54,9 @@ void main()
 	vec4 vertexPos = m_Transform * vec4(a_Position, 1.0f);
 	vs_out.v_FragPos = invTBNMatrix * vertexPos.xyz;
 	vs_out.v_ViewPos = invTBNMatrix * ViewPos;
+	vs_out.normal = a_Normal;
+	vs_out.tangent = a_Tangent;
+	vs_out.bitangent = a_Bitangent;
 	vs_out.invTBNMatrix = invTBNMatrix;
 	gl_Position = m_ViewProjection * vertexPos;
 }
@@ -73,11 +79,12 @@ struct Material
 {
 	sampler2D AlbedoMap;
 	sampler2D NormalMap;
-	sampler2D MetallicMap;
-	sampler2D RoughnessMap;
-
-	vec3  AmbientColour;
-	vec3  DiffuseColour;
+	// sampler2D MetallicMap;
+	// sampler2D RoughnessMap;
+	sampler2D MetallicRoughnessMap;
+	// vec3  AmbientColour;
+	// vec3  DiffuseColour;
+	vec4 BaseColour;
 	float MetallicFactor;
 	float RoughnessFactor;
 };
@@ -94,6 +101,9 @@ in VS_Out
 	vec3 v_FragPos;
 	vec2 v_TexCoord;
 	vec3 v_ViewPos;
+	vec3 normal;
+	vec3 tangent;
+	vec3 bitangent;
 	mat3 invTBNMatrix;
 	PointLight pointLights[2];
 } fs_in;
@@ -116,10 +126,10 @@ void main()
 	vec3 albedo = texture(material.AlbedoMap, fs_in.v_TexCoord).rgb;
 	albedo = pow(albedo, vec3(gamma));
 
-	float roughness = texture(material.RoughnessMap, fs_in.v_TexCoord).r;
+	float roughness = texture(material.MetallicRoughnessMap, fs_in.v_TexCoord).b;
 	float alpha = roughness * roughness;
 
-	float metalness = texture(material.MetallicMap, fs_in.v_TexCoord).r;
+	float metalness = texture(material.MetallicRoughnessMap, fs_in.v_TexCoord).g;
 
 	vec3 viewDir = normalize(fs_in.v_ViewPos - fs_in.v_FragPos);
 	vec3 reflDir = normalize(transpose(fs_in.invTBNMatrix) * reflect(-viewDir, normal));
@@ -181,9 +191,11 @@ void main()
 	// 	}
 		
 	// }
-	Colour = vec4(ambient + direct, 1.0f);
-	// Colour = vec4(specular, 1.0f);
+	// Colour = vec4(ambient + direct, 1.0f);
+	// Colour = vec4(inverse(fs_in.invTBNMatrix) * vec3(0.0, 0.0, 1.0), 1.0);
+	Colour = vec4(albedo, 1.0f);
 	// Colour += vec4(irradianceMapColour * albedo / PI, 0.0f);
+	// Colour = vec4(1.0, 0.0, 1.0, 1.0);
 }
 
 

@@ -2,7 +2,7 @@
 
 #include "Charcoal/Renderer/Shader.h"
 
-#include <unordered_map>
+#include <map>
 
 namespace Charcoal
 {
@@ -18,8 +18,8 @@ namespace Charcoal
 		static Ref<Shader> LoadShader(std::string filepath, ShaderLanguage language);
 		static Ref<Shader> GetShader(std::string name);
 		
-	private:
-		static std::unordered_map<std::string, Ref<Shader>> m_Shaders;
+	public:
+		static std::map<std::string, Ref<Shader>> shader_map;
 	};
 	
 }

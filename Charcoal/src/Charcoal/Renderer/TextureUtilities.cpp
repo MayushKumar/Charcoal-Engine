@@ -60,7 +60,7 @@ namespace TextureUtilities
 			{ ShaderDataType::Float3, "a_Pos" }
 		};
 		vertexBuffer->SetLayout(layout);
-		Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(sizeof(indices), indices);
+		Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(DataType::UInt32, sizeof(indices), indices);
 		s_CubeVertexArray->AddVertexBuffer(vertexBuffer);
 		s_CubeVertexArray->SetIndexBuffer(indexBuffer);
 		s_CubeVertexArray->Unbind();

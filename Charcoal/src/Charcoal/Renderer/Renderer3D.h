@@ -34,6 +34,9 @@ namespace Charcoal
 		Ref<Shader> TonemappingShader;
 
 		Ref<Shader> SkyBoxShader;
+
+		Ref<Texture2D> WhiteTexture;
+		Ref<Texture2D> BlueTexture;
 	};
 
 	public:
@@ -49,9 +52,10 @@ namespace Charcoal
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
+	public:
+		static Storage* m_Storage;
 	private:
 		static Ref<Scene3D> m_Scene;
-		static Storage* m_Storage;
 	};
 
 }
